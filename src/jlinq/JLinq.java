@@ -278,6 +278,11 @@ public class JLinq {
 	}
 	
 	public static <TSource> Iterable<TSource> where(Iterable<TSource> source, Predicate<TSource> predicate) {
+		if (source == null || predicate == null) {
+			return null;
+		}
+		
+		return new WhereIterator<TSource>(source, predicate);
 	}
 	
 	public static <TSource> Iterable<TSource> where(Iterable<TSource> source, Function2<TSource, Integer, Boolean> predicate) {
