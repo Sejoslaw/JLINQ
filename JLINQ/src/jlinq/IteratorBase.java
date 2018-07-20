@@ -15,4 +15,8 @@ abstract class IteratorBase<TSource> implements Iterator<TSource>, Iterable<TSou
 	 * Current element.
 	 */
 	protected TSource current;
+	
+	public Iterator<TSource> iterator() {
+		return this;
+	}
 }

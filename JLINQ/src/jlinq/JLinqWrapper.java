@@ -12,253 +12,198 @@ import java.util.function.Predicate;
 import jlinq.functions.Function2;
 
 /**
- * Wraps functionality of JLINQ to allow for faster method calls. Use it as a
- * standard .NET IEnumerable: MyList.Where(...).Select(...).ToList(); The only
- * requirement is to give JLinqWrapper an {@link Iterable} on which you want to
- * operate. Internal {@link Iterable} is always use as a first parameters in
- * JLinq methods.
+ * Wraps functionality of JLINQ to allow for faster method calls. Generic
+ * parameter is a parameter of initial {@link Iterable} passed in argument. Use
+ * it as a standard .NET IEnumerable: MyList.Where(...).Select(...).ToList();
+ * The only requirement is to give JLinqWrapper an {@link Iterable} on which you
+ * want to operate. Internal {@link Iterable} is always use as a first
+ * parameters in JLinq methods.
  * 
  * 
  * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com
  *
  */
-public final class JLinqWrapper {
+public final class JLinqWrapper<TSource> {
 
-	@SuppressWarnings("rawtypes")
-	private Iterable iterable;
+	private Iterable<TSource> iterable;
 
-	@SuppressWarnings("rawtypes")
 	public JLinqWrapper() {
-		this.iterable = new ArrayList();
+		this.iterable = new ArrayList<TSource>();
 	}
 
-	@SuppressWarnings("rawtypes")
-	public JLinqWrapper(Iterable iterable) {
+	public JLinqWrapper(Iterable<TSource> iterable) {
 		this.iterable = iterable;
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource aggregate(Function<TSource, TSource> func) {
-		return (TSource) JLinq.aggregate(this.iterable, func);
+	public TSource aggregate(Function<TSource, TSource> func) {
+		return JLinq.aggregate(this.iterable, func);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> boolean all(Predicate<TSource> predicate) {
+	public boolean all(Predicate<TSource> predicate) {
 		return JLinq.all(this.iterable, predicate);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> boolean any() {
+	public boolean any() {
 		return JLinq.any(this.iterable);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> boolean any(Predicate<TSource> predicate) {
+	public boolean any(Predicate<TSource> predicate) {
 		return JLinq.any(this.iterable, predicate);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper asIterable() {
-		this.iterable = JLinq.asIterable(this.iterable);
-		return this;
+	public JLinqWrapper<TSource> asIterable() {
+		return new JLinqWrapper<TSource>(JLinq.asIterable(this.iterable));
 	}
 
 	// TODO: Add here Average methods
 
-	@SuppressWarnings("unchecked")
-	public <TSource, TResult> JLinqWrapper cast(Function<TSource, TResult> func) {
-		this.iterable = JLinq.cast(this.iterable, func);
-		return this;
+	public <TResult> JLinqWrapper<TResult> cast(Function<TSource, TResult> func) {
+		return new JLinqWrapper<TResult>(JLinq.cast(this.iterable, func));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper concat(Iterable<TSource> second) {
-		this.iterable = JLinq.concat(this.iterable, second);
-		return this;
+	public JLinqWrapper<TSource> concat(Iterable<TSource> second) {
+		return new JLinqWrapper<TSource>(JLinq.concat(this.iterable, second));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> boolean contains(TSource value) {
+	public boolean contains(TSource value) {
 		return JLinq.contains(this.iterable, value);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> boolean contains(TSource value, Comparator<TSource> comparator) {
+	public boolean contains(TSource value, Comparator<TSource> comparator) {
 		return JLinq.contains(this.iterable, value, comparator);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> int count() {
+	public int count() {
 		return JLinq.count(this.iterable);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> int count(Predicate<TSource> predicate) {
+	public int count(Predicate<TSource> predicate) {
 		return JLinq.count(this.iterable, predicate);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper defaultIfEmpty() {
-		this.iterable = JLinq.defaultIfEmpty(this.iterable);
-		return this;
+	public JLinqWrapper<TSource> defaultIfEmpty() {
+		return new JLinqWrapper<TSource>(JLinq.defaultIfEmpty(this.iterable));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper defaultIfEmpty(TSource defaultValue) {
-		this.iterable = JLinq.defaultIfEmpty(this.iterable, defaultValue);
-		return this;
+	public JLinqWrapper<TSource> defaultIfEmpty(TSource defaultValue) {
+		return new JLinqWrapper<TSource>(JLinq.defaultIfEmpty(this.iterable, defaultValue));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper distinct() {
-		this.iterable = JLinq.distinct(this.iterable);
-		return this;
+	public JLinqWrapper<TSource> distinct() {
+		return new JLinqWrapper<TSource>(JLinq.distinct(this.iterable));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper distinct(Comparator<TSource> comparator) {
-		this.iterable = JLinq.distinct(this.iterable, comparator);
-		return this;
+	public JLinqWrapper<TSource> distinct(Comparator<TSource> comparator) {
+		return new JLinqWrapper<TSource>(JLinq.distinct(this.iterable, comparator));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource elementAt(int index) {
-		return (TSource) JLinq.elementAt(this.iterable, index);
+	public TSource elementAt(int index) {
+		return JLinq.elementAt(this.iterable, index);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource elementAtOrDefault(int index) {
-		return (TSource) JLinq.elementAtOrDefault(this.iterable, index);
+	public TSource elementAtOrDefault(int index) {
+		return JLinq.elementAtOrDefault(this.iterable, index);
 	}
 
-	public JLinqWrapper empty() {
-		this.iterable = JLinq.empty();
-		return this;
+	public JLinqWrapper<TSource> empty() {
+		return new JLinqWrapper<TSource>(JLinq.empty());
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper except(Iterable<TSource> second) {
-		this.iterable = JLinq.except(this.iterable, second);
-		return this;
+	public JLinqWrapper<TSource> except(Iterable<TSource> second) {
+		return new JLinqWrapper<TSource>(JLinq.except(this.iterable, second));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper except(Iterable<TSource> second, Comparator<TSource> comparator) {
-		this.iterable = JLinq.except(this.iterable, second, comparator);
-		return this;
+	public JLinqWrapper<TSource> except(Iterable<TSource> second, Comparator<TSource> comparator) {
+		return new JLinqWrapper<TSource>(JLinq.except(this.iterable, second, comparator));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper find(Predicate<TSource> predicate) {
-		this.iterable = JLinq.find(this.iterable, predicate);
-		return this;
+	public JLinqWrapper<TSource> find(Predicate<TSource> predicate) {
+		return new JLinqWrapper<TSource>(JLinq.find(this.iterable, predicate));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource first() {
-		return (TSource) JLinq.first(this.iterable);
+	public TSource first() {
+		return JLinq.first(this.iterable);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource first(Predicate<TSource> predicate) {
-		return (TSource) JLinq.first(this.iterable, predicate);
+	public TSource first(Predicate<TSource> predicate) {
+		return JLinq.first(this.iterable, predicate);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource firstOrDefault() {
-		return (TSource) JLinq.firstOrDefault(this.iterable);
+	public TSource firstOrDefault() {
+		return JLinq.firstOrDefault(this.iterable);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource firstOrDefault(Predicate<TSource> predicate) {
-		return (TSource) JLinq.firstOrDefault(this.iterable, predicate);
+	public TSource firstOrDefault(Predicate<TSource> predicate) {
+		return JLinq.firstOrDefault(this.iterable, predicate);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> void forEach(Consumer<TSource> action) {
+	public void forEach(Consumer<TSource> action) {
 		JLinq.forEach(this.iterable, action);
 	}
 
 	// TODO: Add here GroupBy methods
 
-	@SuppressWarnings("unchecked")
-	public <TOuter, TInner, TKey, TResult> JLinqWrapper groupJoin(Iterable<TInner> inner,
-			Function<TOuter, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
-			Function2<TOuter, Iterable<TInner>, TResult> resultSelector) {
-		this.iterable = JLinq.groupJoin(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector);
-		return this;
+	public <TInner, TKey, TResult> JLinqWrapper<TResult> groupJoin(Iterable<TInner> inner,
+			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
+			Function2<TSource, Iterable<TInner>, TResult> resultSelector) {
+		return new JLinqWrapper<TResult>(
+				JLinq.groupJoin(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TOuter, TInner, TKey, TResult> JLinqWrapper groupJoin(Iterable<TInner> inner,
-			Function<TOuter, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
-			Function2<TOuter, Iterable<TInner>, TResult> resultSelector, Comparator<TKey> comparator) {
-		this.iterable = JLinq.groupJoin(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector,
-				comparator);
-		return this;
+	public <TInner, TKey, TResult> JLinqWrapper<TResult> groupJoin(Iterable<TInner> inner,
+			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
+			Function2<TSource, Iterable<TInner>, TResult> resultSelector, Comparator<TKey> comparator) {
+		return new JLinqWrapper<TResult>(
+				JLinq.groupJoin(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector, comparator));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> int indexOf(TSource element) {
+	public int indexOf(TSource element) {
 		return JLinq.indexOf(this.iterable, element);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper intersect(Iterable<TSource> second) {
-		this.iterable = JLinq.intersect(this.iterable, second);
-		return this;
+	public JLinqWrapper<TSource> intersect(Iterable<TSource> second) {
+		return new JLinqWrapper<TSource>(JLinq.intersect(this.iterable, second));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper intersect(Iterable<TSource> second, Comparator<TSource> comparator) {
-		this.iterable = JLinq.intersect(this.iterable, second, comparator);
-		return this;
+	public JLinqWrapper<TSource> intersect(Iterable<TSource> second, Comparator<TSource> comparator) {
+		return new JLinqWrapper<TSource>(JLinq.intersect(this.iterable, second, comparator));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TOuter, TInner, TKey, TResult> JLinqWrapper join(Iterable<TInner> inner,
-			Function<TOuter, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
-			Function2<TOuter, TInner, TResult> resultSelector) {
-		this.iterable = JLinq.join(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector);
-		return this;
+	public <TInner, TKey, TResult> JLinqWrapper<TResult> join(Iterable<TInner> inner,
+			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
+			Function2<TSource, TInner, TResult> resultSelector) {
+		return new JLinqWrapper<TResult>(
+				JLinq.join(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TOuter, TInner, TKey, TResult> JLinqWrapper join(Iterable<TInner> inner,
-			Function<TOuter, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
-			Function2<TOuter, TInner, TResult> resultSelector, Comparator<TKey> comparator) {
-		this.iterable = JLinq.join(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector,
-				comparator);
-		return this;
+	public <TInner, TKey, TResult> JLinqWrapper<TResult> join(Iterable<TInner> inner,
+			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
+			Function2<TSource, TInner, TResult> resultSelector, Comparator<TKey> comparator) {
+		return new JLinqWrapper<TResult>(
+				JLinq.join(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector, comparator));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource last() {
-		return (TSource) JLinq.last(this.iterable);
+	public TSource last() {
+		return JLinq.last(this.iterable);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource last(Predicate<TSource> predicate) {
-		return (TSource) JLinq.last(this.iterable, predicate);
+	public TSource last(Predicate<TSource> predicate) {
+		return JLinq.last(this.iterable, predicate);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource lastOrDefault() {
-		return (TSource) JLinq.last(this.iterable);
+	public TSource lastOrDefault() {
+		return JLinq.last(this.iterable);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource lastOrDefault(Predicate<TSource> predicate) {
-		return (TSource) JLinq.last(this.iterable, predicate);
+	public TSource lastOrDefault(Predicate<TSource> predicate) {
+		return JLinq.last(this.iterable, predicate);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> long longCount() {
+	public long longCount() {
 		return JLinq.longCount(this.iterable);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> long longCount(Predicate<TSource> predicate) {
+	public long longCount(Predicate<TSource> predicate) {
 		return JLinq.longCount(this.iterable, predicate);
 	}
 
@@ -266,218 +211,162 @@ public final class JLinqWrapper {
 
 	// TODO: Add here Min methods
 
-	public <TSource> JLinqWrapper ofType() {
-		this.iterable = JLinq.ofType(this.iterable);
-		return this;
+	public JLinqWrapper<TSource> ofType() {
+		return new JLinqWrapper<TSource>(JLinq.ofType(this.iterable));
 	}
 
 	// TODO: Add here OrderBy and OrderByDescending methods
 
-	public JLinqWrapper range(int start, int count) {
-		this.iterable = JLinq.range(start, count);
-		return this;
+	public JLinqWrapper<Integer> range(int start, int count) {
+		return new JLinqWrapper<Integer>(JLinq.range(start, count));
 	}
 
-	public <TResult> JLinqWrapper repeat(TResult element, int count) {
-		this.iterable = JLinq.repeat(element, count);
-		return this;
+	public JLinqWrapper<TSource> repeat(TSource element, int count) {
+		return new JLinqWrapper<TSource>(JLinq.repeat(element, count));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper replaceAt(int index, TSource newValue) {
-		this.iterable = JLinq.replaceAt(this.iterable, index, newValue);
-		return this;
+	public JLinqWrapper<TSource> replaceAt(int index, TSource newValue) {
+		return new JLinqWrapper<TSource>(JLinq.replaceAt(this.iterable, index, newValue));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper replaceMultiple(TSource newValue, Predicate<TSource> predicate) {
-		this.iterable = JLinq.replaceMultiple(this.iterable, newValue, predicate);
-		return this;
+	public JLinqWrapper<TSource> replaceMultiple(TSource newValue, Predicate<TSource> predicate) {
+		return new JLinqWrapper<TSource>(JLinq.replaceMultiple(this.iterable, newValue, predicate));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper reverse() {
-		this.iterable = JLinq.reverse(this.iterable);
-		return this;
+	public JLinqWrapper<TSource> reverse() {
+		return new JLinqWrapper<TSource>(JLinq.reverse(this.iterable));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource, TResult> JLinqWrapper select(Function<TSource, TResult> selector) {
-		this.iterable = JLinq.select(this.iterable, selector);
-		return this;
+	public <TResult> JLinqWrapper<TResult> select(Function<TSource, TResult> selector) {
+		return new JLinqWrapper<TResult>(JLinq.select(this.iterable, selector));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource, TResult> JLinqWrapper select(Function2<TSource, Integer, TResult> selector) {
-		this.iterable = JLinq.select(this.iterable, selector);
-		return this;
+	public <TResult> JLinqWrapper<TResult> select(Function2<TSource, Integer, TResult> selector) {
+		return new JLinqWrapper<TResult>(JLinq.select(this.iterable, selector));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource, TResult> JLinqWrapper selectMany(Function<TSource, Iterable<TResult>> selector) {
-		this.iterable = JLinq.selectMany(this.iterable, selector);
-		return this;
+	public <TResult> JLinqWrapper<TResult> selectMany(Function<TSource, Iterable<TResult>> selector) {
+		return new JLinqWrapper<TResult>(JLinq.selectMany(this.iterable, selector));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource, TCollection, TResult> JLinqWrapper selectMany(
+	public <TCollection, TResult> JLinqWrapper<TResult> selectMany(
 			Function<TSource, Iterable<TCollection>> collectionSelector,
 			Function2<TSource, TCollection, TResult> resultSelector) {
-		this.iterable = JLinq.selectMany(this.iterable, collectionSelector, resultSelector);
-		return this;
+		return new JLinqWrapper<TResult>(JLinq.selectMany(this.iterable, collectionSelector, resultSelector));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource, TCollection, TResult> JLinqWrapper selectMany(
+	public <TCollection, TResult> JLinqWrapper<TResult> selectMany(
 			Function2<TSource, Integer, Iterable<TCollection>> collectionSelector,
 			Function2<TSource, TCollection, TResult> resultSelector) {
-		this.iterable = JLinq.selectMany(this.iterable, collectionSelector, resultSelector);
-		return this;
+		return new JLinqWrapper<TResult>(JLinq.selectMany(this.iterable, collectionSelector, resultSelector));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource, TResult> JLinqWrapper selectMany(Function2<TSource, Integer, Iterable<TResult>> selector) {
-		this.iterable = JLinq.selectMany(this.iterable, selector);
-		return this;
+	public <TResult> JLinqWrapper<TResult> selectMany(Function2<TSource, Integer, Iterable<TResult>> selector) {
+		return new JLinqWrapper<TResult>(JLinq.selectMany(this.iterable, selector));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> boolean sequenceEqual(Iterable<TSource> second) {
+	public boolean sequenceEqual(Iterable<TSource> second) {
 		return JLinq.sequenceEqual(this.iterable, second);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> boolean sequenceEqual(Iterable<TSource> second, Comparator<TSource> comparator) {
+	public boolean sequenceEqual(Iterable<TSource> second, Comparator<TSource> comparator) {
 		return JLinq.sequenceEqual(this.iterable, second, comparator);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource single() {
-		return (TSource) JLinq.single(this.iterable);
+	public TSource single() {
+		return JLinq.single(this.iterable);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource single(Predicate<TSource> predicate) {
-		return (TSource) JLinq.single(this.iterable, predicate);
+	public TSource single(Predicate<TSource> predicate) {
+		return JLinq.single(this.iterable, predicate);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource singleOrDefault() {
-		return (TSource) JLinq.singleOrDefault(this.iterable);
+	public TSource singleOrDefault() {
+		return JLinq.singleOrDefault(this.iterable);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource singleOrDefault(Predicate<TSource> predicate) {
-		return (TSource) JLinq.singleOrDefault(this.iterable, predicate);
+	public TSource singleOrDefault(Predicate<TSource> predicate) {
+		return JLinq.singleOrDefault(this.iterable, predicate);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper skip(int count) {
-		this.iterable = JLinq.skip(this.iterable, count);
-		return this;
+	public JLinqWrapper<TSource> skip(int count) {
+		return new JLinqWrapper<TSource>(JLinq.skip(this.iterable, count));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper skipWhile(Predicate<TSource> predicate) {
-		this.iterable = JLinq.skipWhile(this.iterable, predicate);
-		return this;
+	public JLinqWrapper<TSource> skipWhile(Predicate<TSource> predicate) {
+		return new JLinqWrapper<TSource>(JLinq.skipWhile(this.iterable, predicate));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper skipWhile(Function2<TSource, Integer, Boolean> predicate) {
-		this.iterable = JLinq.skipWhile(this.iterable, predicate);
-		return this;
+	public JLinqWrapper<TSource> skipWhile(Function2<TSource, Integer, Boolean> predicate) {
+		return new JLinqWrapper<TSource>(JLinq.skipWhile(this.iterable, predicate));
 	}
 
 	// TODO: Add here Sum methods
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper take(int count) {
-		this.iterable = JLinq.take(this.iterable, count);
-		return this;
+	public JLinqWrapper<TSource> take(int count) {
+		return new JLinqWrapper<TSource>(JLinq.take(this.iterable, count));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper takeWhile(Predicate<TSource> predicate) {
-		this.iterable = JLinq.takeWhile(this.iterable, predicate);
-		return this;
+	public JLinqWrapper<TSource> takeWhile(Predicate<TSource> predicate) {
+		return new JLinqWrapper<TSource>(JLinq.takeWhile(this.iterable, predicate));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper takeWhile(Function2<TSource, Integer, Boolean> predicate) {
-		this.iterable = JLinq.takeWhile(this.iterable, predicate);
-		return this;
+	public JLinqWrapper<TSource> takeWhile(Function2<TSource, Integer, Boolean> predicate) {
+		return new JLinqWrapper<TSource>(JLinq.takeWhile(this.iterable, predicate));
 	}
 
 	// TODO: Add here ThenBy and ThenByDescending methods
 
-	@SuppressWarnings("unchecked")
-	public <TSource> TSource[] toArray() {
-		return (TSource[]) JLinq.toArray(this.iterable);
+	public TSource[] toArray() {
+		return JLinq.toArray(this.iterable);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> List<TSource> toList() {
+	public List<TSource> toList() {
 		return JLinq.toList(this.iterable);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource, TKey, TElement> Map<TKey, TElement> toMap(Function<TSource, TKey> keySelector,
+	public <TKey, TElement> Map<TKey, TElement> toMap(Function<TSource, TKey> keySelector,
 			Function<TSource, TElement> elementSelector) {
 		return JLinq.toMap(this.iterable, keySelector, elementSelector);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource, TKey, TElement> Map<TKey, TElement> toMap(Function<TSource, TKey> keySelector,
+	public <TKey, TElement> Map<TKey, TElement> toMap(Function<TSource, TKey> keySelector,
 			Function<TSource, TElement> elementSelector, Comparator<TKey> comparator) {
 		return JLinq.toMap(this.iterable, keySelector, elementSelector, comparator);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource, TKey> Map<TKey, TSource> toMap(Function<TSource, TKey> keySelector) {
+	public <TKey> Map<TKey, TSource> toMap(Function<TSource, TKey> keySelector) {
 		return JLinq.toMap(this.iterable, keySelector);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource, TKey> Map<TKey, TSource> toMap(Function<TSource, TKey> keySelector, Comparator<TKey> comparator) {
+	public <TKey> Map<TKey, TSource> toMap(Function<TSource, TKey> keySelector, Comparator<TKey> comparator) {
 		return JLinq.toMap(this.iterable, keySelector, comparator);
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> Set<TSource> toSet() {
+	public Set<TSource> toSet() {
 		return JLinq.toSet(this.iterable);
 	}
 
 	// TODO: Add here ToLookup methods
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper union(Iterable<TSource> second) {
-		this.iterable = JLinq.union(this.iterable, second);
-		return this;
+	public JLinqWrapper<TSource> union(Iterable<TSource> second) {
+		return new JLinqWrapper<TSource>(JLinq.union(this.iterable, second));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper union(Iterable<TSource> second, Comparator<TSource> comparator) {
-		this.iterable = JLinq.union(this.iterable, second, comparator);
-		return this;
+	public JLinqWrapper<TSource> union(Iterable<TSource> second, Comparator<TSource> comparator) {
+		return new JLinqWrapper<TSource>(JLinq.union(this.iterable, second, comparator));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper where(Predicate<TSource> predicate) {
-		this.iterable = JLinq.where(this.iterable, predicate);
-		return this;
+	public JLinqWrapper<TSource> where(Predicate<TSource> predicate) {
+		return new JLinqWrapper<TSource>(JLinq.where(this.iterable, predicate));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TSource> JLinqWrapper where(Function2<TSource, Integer, Boolean> predicate) {
-		this.iterable = JLinq.where(this.iterable, predicate);
-		return this;
+	public JLinqWrapper<TSource> where(Function2<TSource, Integer, Boolean> predicate) {
+		return new JLinqWrapper<TSource>(JLinq.where(this.iterable, predicate));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <TFirst, TSecond, TResult> JLinqWrapper zip(Iterable<TSecond> second,
-			Function2<TFirst, TSecond, TResult> resultSelector) {
-		this.iterable = JLinq.zip(this.iterable, second, resultSelector);
-		return this;
+	public <TSecond, TResult> JLinqWrapper<TResult> zip(Iterable<TSecond> second,
+			Function2<TSource, TSecond, TResult> resultSelector) {
+		return new JLinqWrapper<TResult>(JLinq.zip(this.iterable, second, resultSelector));
 	}
 }

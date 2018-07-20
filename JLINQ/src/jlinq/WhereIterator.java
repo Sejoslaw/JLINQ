@@ -1,6 +1,5 @@
 package jlinq;
 
-import java.util.Iterator;
 import java.util.function.Predicate;
 
 class WhereIterator<TSource> extends IteratorBase<TSource> {
@@ -12,9 +11,5 @@ class WhereIterator<TSource> extends IteratorBase<TSource> {
 	}
 	
 	public TSource next() {
-	}
-	
-	public Iterator<TSource> iterator() {
-		return this;
 	}
 }

@@ -20,7 +20,7 @@ public class Main {
 
 		// The same version as above using JLinqWrapper class which wraps all JLinq
 		// methods.
-		int wrapperCount = new JLinqWrapper(customers).where((customer) -> ((Customer) customer).age == 24).count();
+		int wrapperCount = new JLinqWrapper<Customer>(customers).where((customer) -> customer.age == 24).count();
 		System.out.println(wrapperCount);
 	}
 
