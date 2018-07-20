@@ -35,7 +35,7 @@ public final class JLinqWrapper<TSource> {
 		this.iterable = iterable;
 	}
 
-	public TSource aggregate(Function<TSource, TSource> func) {
+	public TSource aggregate(Function2<TSource, TSource, TSource> func) {
 		return JLinq.aggregate(this.iterable, func);
 	}
 
@@ -297,53 +297,46 @@ public final class JLinqWrapper<TSource> {
 		return new JLinqWrapper<TSource>(JLinq.skipWhile(this.iterable, predicate));
 	}
 
-	public JLinqWrapper<TSource> skipWhile(Function2<TSource, Integer, Boolean> predicate) {
-		return new JLinqWrapper<TSource>(JLinq.skipWhile(this.iterable, predicate));
-	}
-
 	// TODO: Add here Sum methods
 
-	public JLinqWrapper<TSource> take(int count) {
+	public JLinqWrapper<TSource> take(int count) throws IllegalAccessException {
 		return new JLinqWrapper<TSource>(JLinq.take(this.iterable, count));
 	}
 
-	public JLinqWrapper<TSource> takeWhile(Predicate<TSource> predicate) {
-		return new JLinqWrapper<TSource>(JLinq.takeWhile(this.iterable, predicate));
-	}
-
-	public JLinqWrapper<TSource> takeWhile(Function2<TSource, Integer, Boolean> predicate) {
+	public JLinqWrapper<TSource> takeWhile(Predicate<TSource> predicate) throws IllegalAccessException {
 		return new JLinqWrapper<TSource>(JLinq.takeWhile(this.iterable, predicate));
 	}
 
 	// TODO: Add here ThenBy and ThenByDescending methods
 
-	public TSource[] toArray() {
+	public TSource[] toArray() throws IllegalAccessException {
 		return JLinq.toArray(this.iterable);
 	}
 
-	public List<TSource> toList() {
+	public List<TSource> toList() throws IllegalAccessException {
 		return JLinq.toList(this.iterable);
 	}
 
 	public <TKey, TElement> Map<TKey, TElement> toMap(Function<TSource, TKey> keySelector,
-			Function<TSource, TElement> elementSelector) {
+			Function<TSource, TElement> elementSelector) throws IllegalAccessException {
 		return JLinq.toMap(this.iterable, keySelector, elementSelector);
 	}
 
 	public <TKey, TElement> Map<TKey, TElement> toMap(Function<TSource, TKey> keySelector,
-			Function<TSource, TElement> elementSelector, Comparator<TKey> comparator) {
+			Function<TSource, TElement> elementSelector, Comparator<TKey> comparator) throws IllegalAccessException {
 		return JLinq.toMap(this.iterable, keySelector, elementSelector, comparator);
 	}
 
-	public <TKey> Map<TKey, TSource> toMap(Function<TSource, TKey> keySelector) {
+	public <TKey> Map<TKey, TSource> toMap(Function<TSource, TKey> keySelector) throws IllegalAccessException {
 		return JLinq.toMap(this.iterable, keySelector);
 	}
 
-	public <TKey> Map<TKey, TSource> toMap(Function<TSource, TKey> keySelector, Comparator<TKey> comparator) {
+	public <TKey> Map<TKey, TSource> toMap(Function<TSource, TKey> keySelector, Comparator<TKey> comparator)
+			throws IllegalAccessException {
 		return JLinq.toMap(this.iterable, keySelector, comparator);
 	}
 
-	public Set<TSource> toSet() {
+	public Set<TSource> toSet() throws IllegalAccessException {
 		return JLinq.toSet(this.iterable);
 	}
 
@@ -357,16 +350,12 @@ public final class JLinqWrapper<TSource> {
 		return new JLinqWrapper<TSource>(JLinq.union(this.iterable, second, comparator));
 	}
 
-	public JLinqWrapper<TSource> where(Predicate<TSource> predicate) {
-		return new JLinqWrapper<TSource>(JLinq.where(this.iterable, predicate));
-	}
-
-	public JLinqWrapper<TSource> where(Function2<TSource, Integer, Boolean> predicate) {
+	public JLinqWrapper<TSource> where(Predicate<TSource> predicate) throws IllegalAccessException {
 		return new JLinqWrapper<TSource>(JLinq.where(this.iterable, predicate));
 	}
 
 	public <TSecond, TResult> JLinqWrapper<TResult> zip(Iterable<TSecond> second,
-			Function2<TSource, TSecond, TResult> resultSelector) {
+			Function2<TSource, TSecond, TResult> resultSelector) throws IllegalAccessException {
 		return new JLinqWrapper<TResult>(JLinq.zip(this.iterable, second, resultSelector));
 	}
 }

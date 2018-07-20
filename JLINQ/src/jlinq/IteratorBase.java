@@ -10,12 +10,16 @@ import java.util.Iterator;
  * @param <T>
  */
 abstract class IteratorBase<TSource> implements Iterator<TSource>, Iterable<TSource> {
-	
+
 	/**
 	 * Current element.
 	 */
 	protected TSource current;
-	
+
+	public TSource next() {
+		return this.current;
+	}
+
 	public Iterator<TSource> iterator() {
 		return this;
 	}
