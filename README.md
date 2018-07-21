@@ -93,3 +93,5 @@ int count = JLinq.count(customersWithAge24);
 // Where as constructor parameter you must specify the Iterable on which you want to use JLinq.
 int wrapperCount = new JLinqWrapper<Customer>(customers).where((customer) -> customer.age == 24).count();
 ```
+
+See test projects for more info: [Basic Operations](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ_BasicTests/src/Main.java)
