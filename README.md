@@ -15,10 +15,10 @@ To be implemented LINQ methods:
 - [X] concat
 - [X] contains
 - [X] count
-- [ ] defaultIfEmpty
-- [ ] distinct
-- [ ] elementAt
-- [ ] elementAtOrDefault
+- [X] defaultIfEmpty
+- [X] distinct
+- [X] elementAt
+- [X] elementAtOrDefault
 - [X] empty
 - [ ] except
 - [ ] find
