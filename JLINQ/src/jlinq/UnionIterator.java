@@ -4,6 +4,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * 
+ * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com
+ *
+ * @param <TSource>
+ */
 class UnionIterator<TSource> extends DoubleGenericTypeIterator<TSource, TSource, TSource> {
 
 	private Set<TSource> set;

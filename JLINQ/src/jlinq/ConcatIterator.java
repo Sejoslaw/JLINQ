@@ -2,6 +2,12 @@ package jlinq;
 
 import java.util.Iterator;
 
+/**
+ * 
+ * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com
+ *
+ * @param <TSource>
+ */
 class ConcatIterator<TSource> extends SingleGenericTypeIterator<TSource, TSource> {
 
 	private Iterable<TSource> second;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,7 +36,7 @@ public final class JLinq {
 		if (func == null)
 			throw new IllegalArgumentException("func is null");
 
-		TSource result = null;
+		TSource result = getDefaultValue(source);
 		for (TSource element : source) {
 			result = func.apply(result, element);
 		}
@@ -154,27 +155,79 @@ public final class JLinq {
 	}
 
 	public static <TSource> Iterable<TSource> defaultIfEmpty(Iterable<TSource> source) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		return defaultIfEmpty(source, getDefaultValue(source));
 	}
 
 	public static <TSource> Iterable<TSource> defaultIfEmpty(Iterable<TSource> source, TSource defaultValue) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (defaultValue == null)
+			throw new IllegalArgumentException("defaultValue is null");
+
+		return new DefaultIfEmptyIterator<TSource>(source, defaultValue);
 	}
 
 	public static <TSource> Iterable<TSource> distinct(Iterable<TSource> source) {
-		throw new UnsupportedOperationException();
-	}
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
 
-	public static <TSource> Iterable<TSource> distinct(Iterable<TSource> source, Comparator<TSource> comparator) {
-		throw new UnsupportedOperationException();
+		return new DistinctIterator<TSource>(source);
 	}
 
 	public static <TSource> TSource elementAt(Iterable<TSource> source, int index) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (index < 0)
+			throw new IllegalArgumentException("index is less than 0");
+
+		if (source instanceof List<?>) {
+			return ((List<TSource>) source).get(index);
+		} else {
+			Iterator<TSource> iterator = source.iterator();
+			TSource element = getDefaultValue(source);
+			while (true) {
+				if (iterator.hasNext()) {
+					element = iterator.next();
+					if (index == 0) {
+						return element;
+					} else {
+						index--;
+					}
+				} else {
+					throw new IndexOutOfBoundsException("Index [" + index + "] is out of bounds");
+				}
+			}
+		}
 	}
 
 	public static <TSource> TSource elementAtOrDefault(Iterable<TSource> source, int index) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		if (index >= 0) {
+			if ((source instanceof List<?>) && (((List<?>) source).size() > index)) {
+				return ((List<TSource>) source).get(index);
+			} else {
+				Iterator<TSource> iterator = source.iterator();
+				TSource element = getDefaultValue(source);
+				while (true) {
+					if (iterator.hasNext()) {
+						element = iterator.next();
+						if (index == 0) {
+							return element;
+						} else {
+							index--;
+						}
+					} else {
+						break;
+					}
+				}
+			}
+		}
+		return getDefaultValue(source);
 	}
 
 	public static <TSource> Iterable<TSource> empty() {
@@ -569,5 +622,16 @@ public final class JLinq {
 			throw new IllegalAccessException("resultSelector is null");
 
 		return new ZipIterator<TFirst, TSecond, TResult>(first, second, resultSelector);
+	}
+
+	// ---=== Private Methods ===---
+
+	@SuppressWarnings("unchecked")
+	private static <TSource> TSource getDefaultValue(Iterable<TSource> source) {
+		try {
+			return (TSource) (Object) null;
+		} catch (Exception ex) {
+			return (TSource) (Object) 0;
+		}
 	}
 }

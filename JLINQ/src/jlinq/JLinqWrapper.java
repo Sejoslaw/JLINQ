@@ -93,10 +93,6 @@ public final class JLinqWrapper<TSource> {
 		return new JLinqWrapper<TSource>(JLinq.distinct(this.iterable));
 	}
 
-	public JLinqWrapper<TSource> distinct(Comparator<TSource> comparator) {
-		return new JLinqWrapper<TSource>(JLinq.distinct(this.iterable, comparator));
-	}
-
 	public TSource elementAt(int index) {
 		return JLinq.elementAt(this.iterable, index);
 	}

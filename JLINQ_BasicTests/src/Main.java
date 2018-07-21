@@ -25,6 +25,7 @@ public class Main {
 
 		System.out.println(new JLinqWrapper<Customer>(new ArrayList<Customer>()).any());
 		System.out.println(new JLinqWrapper<Customer>(customers).any());
+		System.out.println(new JLinqWrapper<Customer>(customers).elementAt(5).name);
 	}
 
 	private static void fillCustomers(List<Customer> customers) {
