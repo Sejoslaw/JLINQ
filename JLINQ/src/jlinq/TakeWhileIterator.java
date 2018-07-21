@@ -8,7 +8,7 @@ import java.util.function.Predicate;
  *
  * @param <TSource>
  */
-class TakeWhileIterator<TSource> extends SingleGenericTypeIterator<TSource> {
+class TakeWhileIterator<TSource> extends SingleGenericTypeIterator<TSource, TSource> {
 
 	private Predicate<TSource> predicate;
 

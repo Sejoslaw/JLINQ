@@ -8,7 +8,7 @@ import java.util.Iterator;
  *
  * @param <TSource>
  */
-abstract class SingleGenericTypeIterator<TSource> extends IteratorBase<TSource> {
+abstract class SingleGenericTypeIterator<TSource, TResult> extends IteratorBase<TResult> {
 
 	protected Iterable<TSource> source;
 	protected Iterator<TSource> sourceIterator;

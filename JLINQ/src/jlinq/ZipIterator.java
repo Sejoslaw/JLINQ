@@ -1,7 +1,5 @@
 package jlinq;
 
-import java.util.Iterator;
-
 import jlinq.functions.Function2;
 
 /**
@@ -12,20 +10,14 @@ import jlinq.functions.Function2;
  * @param <TSecond>
  * @param <TResult>
  */
-class ZipIterator<TFirst, TSecond, TResult> extends IteratorBase<TResult> {
+class ZipIterator<TFirst, TSecond, TResult> extends DoubleGenericTypeIterator<TFirst, TSecond, TResult> {
 
-	private Iterable<TFirst> first;
-	private Iterator<TFirst> firstIterator;
-	private Iterable<TSecond> second;
-	private Iterator<TSecond> secondIterator;
 	private Function2<TFirst, TSecond, TResult> resultSelector;
 
 	public ZipIterator(Iterable<TFirst> first, Iterable<TSecond> second,
 			Function2<TFirst, TSecond, TResult> resultSelector) {
-		this.first = first;
-		this.firstIterator = this.first.iterator();
-		this.second = second;
-		this.secondIterator = this.second.iterator();
+		super(first, second);
+
 		this.resultSelector = resultSelector;
 	}
 

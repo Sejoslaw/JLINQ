@@ -8,7 +8,7 @@ import java.util.function.Predicate;
  *
  * @param <TSource>
  */
-class WhereIterator<TSource> extends SingleGenericTypeIterator<TSource> {
+class WhereIterator<TSource> extends SingleGenericTypeIterator<TSource, TSource> {
 
 	private Predicate<TSource> predicate;
 

@@ -1,6 +1,5 @@
 package jlinq;
 
-import java.util.Iterator;
 import java.util.function.Function;
 
 /**
@@ -10,15 +9,13 @@ import java.util.function.Function;
  * @param <TSource>
  * @param <TResult>
  */
-class CastIterator<TSource, TResult> extends IteratorBase<TResult> {
+class CastIterator<TSource, TResult> extends SingleGenericTypeIterator<TSource, TResult> {
 
-	private Iterable<TSource> source;
-	private Iterator<TSource> sourceIterator;
 	private Function<TSource, TResult> func;
 
 	public CastIterator(Iterable<TSource> source, Function<TSource, TResult> func) {
-		this.source = source;
-		this.sourceIterator = this.source.iterator();
+		super(source);
+
 		this.func = func;
 	}
 

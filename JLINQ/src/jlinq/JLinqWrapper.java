@@ -342,12 +342,8 @@ public final class JLinqWrapper<TSource> {
 
 	// TODO: Add here ToLookup methods
 
-	public JLinqWrapper<TSource> union(Iterable<TSource> second) {
+	public JLinqWrapper<TSource> union(Iterable<TSource> second) throws IllegalAccessException {
 		return new JLinqWrapper<TSource>(JLinq.union(this.iterable, second));
-	}
-
-	public JLinqWrapper<TSource> union(Iterable<TSource> second, Comparator<TSource> comparator) {
-		return new JLinqWrapper<TSource>(JLinq.union(this.iterable, second, comparator));
 	}
 
 	public JLinqWrapper<TSource> where(Predicate<TSource> predicate) throws IllegalAccessException {

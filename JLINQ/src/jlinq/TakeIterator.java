@@ -6,7 +6,7 @@ package jlinq;
  *
  * @param <TSource>
  */
-class TakeIterator<TSource> extends SingleGenericTypeIterator<TSource> {
+class TakeIterator<TSource> extends SingleGenericTypeIterator<TSource, TSource> {
 
 	private int count;
 	private int index;

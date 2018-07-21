@@ -2,7 +2,7 @@ package jlinq;
 
 import java.util.Iterator;
 
-class ConcatIterator<TSource> extends SingleGenericTypeIterator<TSource> {
+class ConcatIterator<TSource> extends SingleGenericTypeIterator<TSource, TSource> {
 
 	private Iterable<TSource> second;
 	private Iterator<TSource> secondIterator;

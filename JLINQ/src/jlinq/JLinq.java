@@ -539,13 +539,14 @@ public final class JLinq {
 
 	// TODO: Add here ToLookup methods
 
-	public static <TSource> Iterable<TSource> union(Iterable<TSource> first, Iterable<TSource> second) {
-		throw new UnsupportedOperationException();
-	}
+	public static <TSource> Iterable<TSource> union(Iterable<TSource> first, Iterable<TSource> second)
+			throws IllegalAccessException {
+		if (first == null)
+			throw new IllegalAccessException("first is null");
+		if (second == null)
+			throw new IllegalAccessException("second is null");
 
-	public static <TSource> Iterable<TSource> union(Iterable<TSource> first, Iterable<TSource> second,
-			Comparator<TSource> comparator) {
-		throw new UnsupportedOperationException();
+		return new UnionIterator<TSource>(first, second);
 	}
 
 	public static <TSource> Iterable<TSource> where(Iterable<TSource> source, Predicate<TSource> predicate)
