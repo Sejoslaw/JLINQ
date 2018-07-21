@@ -7,13 +7,13 @@ Java Language Integrated Query.
 To be implemented LINQ methods:
 ---
 - [X] aggregate
-- [ ] all
-- [ ] any
+- [X] all
+- [X] any
 - [X] asIterable
 - [ ] average
-- [ ] cast
-- [ ] concat
-- [ ] contains
+- [X] cast
+- [X] concat
+- [X] contains
 - [X] count
 - [ ] defaultIfEmpty
 - [ ] distinct
