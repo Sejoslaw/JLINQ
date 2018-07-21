@@ -22,6 +22,9 @@ public class Main {
 		// methods.
 		int wrapperCount = new JLinqWrapper<Customer>(customers).where((customer) -> customer.age == 24).count();
 		System.out.println(wrapperCount);
+
+		System.out.println(new JLinqWrapper<Customer>(new ArrayList<Customer>()).any());
+		System.out.println(new JLinqWrapper<Customer>(customers).any());
 	}
 
 	private static void fillCustomers(List<Customer> customers) {

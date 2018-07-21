@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import jlinq.comparators.DefaultComparator;
 import jlinq.functions.Function2;
 
 /**
@@ -43,15 +44,36 @@ public final class JLinq {
 	}
 
 	public static <TSource> boolean all(Iterable<TSource> source, Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (predicate == null)
+			throw new IllegalArgumentException("predicate is null");
+
+		for (TSource element : source)
+			if (!predicate.test(element))
+				return false;
+
+		return true;
 	}
 
 	public static <TSource> boolean any(Iterable<TSource> source) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		return source.iterator().hasNext();
 	}
 
 	public static <TSource> boolean any(Iterable<TSource> source, Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (predicate == null)
+			throw new IllegalArgumentException("predicate is null");
+
+		for (TSource element : source)
+			if (predicate.test(element))
+				return true;
+
+		return false;
 	}
 
 	public static <TSource> Iterable<TSource> asIterable(Iterable<TSource> source) {
@@ -66,19 +88,44 @@ public final class JLinq {
 	// TODO: Add here Average methods
 
 	public static <TSource, TResult> Iterable<TResult> cast(Iterable<TSource> source, Function<TSource, TResult> func) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (func == null)
+			throw new IllegalArgumentException("func is null");
+
+		return new CastIterator<TSource, TResult>(source, func);
 	}
 
 	public static <TSource> Iterable<TSource> concat(Iterable<TSource> first, Iterable<TSource> second) {
-		throw new UnsupportedOperationException();
+		if (first == null)
+			throw new IllegalArgumentException("first is null");
+		if (second == null)
+			throw new IllegalArgumentException("second is null");
+
+		return new ConcatIterator<TSource>(first, second);
 	}
 
 	public static <TSource> boolean contains(Iterable<TSource> source, TSource value) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (value == null)
+			throw new IllegalArgumentException("value is null");
+
+		return contains(source, value, null);
 	}
 
 	public static <TSource> boolean contains(Iterable<TSource> source, TSource value, Comparator<TSource> comparator) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (value == null)
+			throw new IllegalArgumentException("value is null");
+		if (comparator == null)
+			comparator = new DefaultComparator<TSource>();
+
+		for (TSource element : source)
+			if (comparator.compare(element, value) == 0)
+				return true;
+		return false;
 	}
 
 	public static <TSource> int count(Iterable<TSource> source) {

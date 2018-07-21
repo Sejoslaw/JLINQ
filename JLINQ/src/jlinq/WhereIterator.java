@@ -1,17 +1,20 @@
 package jlinq;
 
-import java.util.Iterator;
 import java.util.function.Predicate;
 
-class WhereIterator<TSource> extends IteratorBase<TSource> {
+/**
+ * 
+ * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com
+ *
+ * @param <TSource>
+ */
+class WhereIterator<TSource> extends SingleGenericTypeIterator<TSource> {
 
-	private Iterable<TSource> source;
-	private Iterator<TSource> sourceIterator;
 	private Predicate<TSource> predicate;
 
 	public WhereIterator(Iterable<TSource> source, Predicate<TSource> predicate) {
-		this.source = source;
-		this.sourceIterator = this.source.iterator();
+		super(source);
+
 		this.predicate = predicate;
 	}
 

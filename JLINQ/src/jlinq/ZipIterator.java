@@ -4,6 +4,14 @@ import java.util.Iterator;
 
 import jlinq.functions.Function2;
 
+/**
+ * 
+ * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com
+ *
+ * @param <TFirst>
+ * @param <TSecond>
+ * @param <TResult>
+ */
 class ZipIterator<TFirst, TSecond, TResult> extends IteratorBase<TResult> {
 
 	private Iterable<TFirst> first;
