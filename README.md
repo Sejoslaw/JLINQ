@@ -40,9 +40,9 @@ To be implemented LINQ methods:
 - [X] repeat
 - [X] replaceAt
 - [X] replaceMultiple
-- [ ] reverse
-- [ ] select
-- [ ] selectMany
+- [X] reverse
+- [X] select
+- [X] selectMany
 - [ ] sequenceEqual
 - [ ] single
 - [ ] singleOrDefault
