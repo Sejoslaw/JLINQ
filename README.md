@@ -56,7 +56,7 @@ To be implemented LINQ methods:
 - [X] toList
 - [X] toMap
 - [X] toSet
-- [ ] union
+- [X] union
 - [X] where
 - [X] zip
 
