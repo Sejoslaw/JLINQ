@@ -109,14 +109,6 @@ public final class JLinqWrapper<TSource> {
 		return new JLinqWrapper<TSource>(JLinq.except(this.iterable, second));
 	}
 
-	public JLinqWrapper<TSource> except(Iterable<TSource> second, Comparator<TSource> comparator) {
-		return new JLinqWrapper<TSource>(JLinq.except(this.iterable, second, comparator));
-	}
-
-	public JLinqWrapper<TSource> find(Predicate<TSource> predicate) {
-		return new JLinqWrapper<TSource>(JLinq.find(this.iterable, predicate));
-	}
-
 	public TSource first() {
 		return JLinq.first(this.iterable);
 	}
@@ -159,10 +151,6 @@ public final class JLinqWrapper<TSource> {
 
 	public JLinqWrapper<TSource> intersect(Iterable<TSource> second) {
 		return new JLinqWrapper<TSource>(JLinq.intersect(this.iterable, second));
-	}
-
-	public JLinqWrapper<TSource> intersect(Iterable<TSource> second, Comparator<TSource> comparator) {
-		return new JLinqWrapper<TSource>(JLinq.intersect(this.iterable, second, comparator));
 	}
 
 	public <TInner, TKey, TResult> JLinqWrapper<TResult> join(Iterable<TInner> inner,

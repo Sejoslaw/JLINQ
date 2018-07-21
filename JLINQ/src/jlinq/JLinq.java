@@ -183,22 +183,18 @@ public final class JLinq {
 		if (index < 0)
 			throw new IllegalArgumentException("index is less than 0");
 
-		if (source instanceof List<?>) {
-			return ((List<TSource>) source).get(index);
-		} else {
-			Iterator<TSource> iterator = source.iterator();
-			TSource element = getDefaultValue(source);
-			while (true) {
-				if (iterator.hasNext()) {
-					element = iterator.next();
-					if (index == 0) {
-						return element;
-					} else {
-						index--;
-					}
+		Iterator<TSource> iterator = source.iterator();
+		TSource element = getDefaultValue(source);
+		while (true) {
+			if (iterator.hasNext()) {
+				element = iterator.next();
+				if (index == 0) {
+					return element;
 				} else {
-					throw new IndexOutOfBoundsException("Index [" + index + "] is out of bounds");
+					index--;
 				}
+			} else {
+				throw new IndexOutOfBoundsException("Index [" + index + "] is out of bounds");
 			}
 		}
 	}
@@ -207,26 +203,21 @@ public final class JLinq {
 		if (source == null)
 			throw new IllegalArgumentException("source is null");
 
-		if (index >= 0) {
-			if ((source instanceof List<?>) && (((List<?>) source).size() > index)) {
-				return ((List<TSource>) source).get(index);
-			} else {
-				Iterator<TSource> iterator = source.iterator();
-				TSource element = getDefaultValue(source);
-				while (true) {
-					if (iterator.hasNext()) {
-						element = iterator.next();
-						if (index == 0) {
-							return element;
-						} else {
-							index--;
-						}
-					} else {
-						break;
-					}
+		Iterator<TSource> iterator = source.iterator();
+		TSource element = getDefaultValue(source);
+		while (true) {
+			if (iterator.hasNext()) {
+				element = iterator.next();
+				if (index == 0) {
+					return element;
+				} else {
+					index--;
 				}
+			} else {
+				break;
 			}
 		}
+
 		return getDefaultValue(source);
 	}
 
@@ -235,37 +226,56 @@ public final class JLinq {
 	}
 
 	public static <TSource> Iterable<TSource> except(Iterable<TSource> first, Iterable<TSource> second) {
-		throw new UnsupportedOperationException();
-	}
+		if (first == null)
+			throw new IllegalArgumentException("first is null");
+		if (second == null)
+			throw new IllegalArgumentException("second is null");
 
-	public static <TSource> Iterable<TSource> except(Iterable<TSource> first, Iterable<TSource> second,
-			Comparator<TSource> comparator) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @param source
-	 * @param element
-	 * @return Returns all occurrence which fulfill specified selector.
-	 */
-	public static <TSource> Iterable<TSource> find(Iterable<TSource> source, Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+		return new ExceptIterator<TSource>(first, second);
 	}
 
 	public static <TSource> TSource first(Iterable<TSource> source) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		Iterator<TSource> iterator = source.iterator();
+		if (iterator.hasNext())
+			return iterator.next();
+
+		throw new IllegalArgumentException("source contains no elements");
 	}
 
 	public static <TSource> TSource first(Iterable<TSource> source, Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		for (TSource element : source)
+			if (predicate.test(element))
+				return element;
+
+		throw new IllegalArgumentException("no matches");
 	}
 
 	public static <TSource> TSource firstOrDefault(Iterable<TSource> source) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		Iterator<TSource> iterator = source.iterator();
+		if (iterator.hasNext())
+			return iterator.next();
+
+		return getDefaultValue(source);
 	}
 
 	public static <TSource> TSource firstOrDefault(Iterable<TSource> source, Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		for (TSource element : source)
+			if (predicate.test(element))
+				return element;
+
+		return getDefaultValue(source);
 	}
 
 	public static <TSource> void forEach(Iterable<TSource> source, Consumer<TSource> action) {
@@ -294,16 +304,28 @@ public final class JLinq {
 	}
 
 	public static <TSource> int indexOf(Iterable<TSource> source, TSource element) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (element == null)
+			throw new IllegalArgumentException("element is null");
+
+		int index = 0;
+		for (TSource sourceElement : source) {
+			if (sourceElement == element)
+				return index;
+			index++;
+		}
+
+		throw new IllegalArgumentException("no matches");
 	}
 
 	public static <TSource> Iterable<TSource> intersect(Iterable<TSource> first, Iterable<TSource> second) {
-		throw new UnsupportedOperationException();
-	}
+		if (first == null)
+			throw new IllegalArgumentException("first is null");
+		if (second == null)
+			throw new IllegalArgumentException("second is null");
 
-	public static <TSource> Iterable<TSource> intersect(Iterable<TSource> first, Iterable<TSource> second,
-			Comparator<TSource> comparator) {
-		throw new UnsupportedOperationException();
+		return new IntersectIterator<TSource>(first, second);
 	}
 
 	public static <TOuter, TInner, TKey, TResult> Iterable<TResult> join(Iterable<TOuter> outer, Iterable<TInner> inner,
@@ -318,28 +340,101 @@ public final class JLinq {
 		throw new UnsupportedOperationException();
 	}
 
-	public static <TSource> TSource last(Iterable<TSource> first) {
-		throw new UnsupportedOperationException();
+	public static <TSource> TSource last(Iterable<TSource> source) {
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		Iterator<TSource> iterator = source.iterator();
+		TSource element = getDefaultValue(source);
+		if (iterator.hasNext()) {
+			while (iterator.hasNext())
+				element = iterator.next();
+			return element;
+		}
+
+		throw new IllegalArgumentException("no elements in source");
 	}
 
-	public static <TSource> TSource last(Iterable<TSource> first, Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+	public static <TSource> TSource last(Iterable<TSource> source, Predicate<TSource> predicate) {
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (predicate == null)
+			throw new IllegalArgumentException("predicate is null");
+
+		boolean foundLast = false;
+		TSource found = getDefaultValue(source);
+		for (TSource element : source) {
+			if (predicate.test(element)) {
+				foundLast = true;
+				found = element;
+			}
+		}
+
+		if (foundLast)
+			return found;
+
+		throw new IllegalArgumentException("no matches");
 	}
 
 	public static <TSource> TSource lastOrDefault(Iterable<TSource> source) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		Iterator<TSource> iterator = source.iterator();
+		TSource element = getDefaultValue(source);
+		if (iterator.hasNext()) {
+			while (iterator.hasNext())
+				element = iterator.next();
+			return element;
+		}
+
+		return getDefaultValue(source);
 	}
 
 	public static <TSource> TSource lastOrDefault(Iterable<TSource> source, Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (predicate == null)
+			throw new IllegalArgumentException("predicate is null");
+
+		boolean foundLast = false;
+		TSource found = getDefaultValue(source);
+		for (TSource element : source) {
+			if (predicate.test(element)) {
+				foundLast = true;
+				found = element;
+			}
+		}
+
+		if (foundLast)
+			return found;
+
+		return getDefaultValue(source);
 	}
 
 	public static <TSource> long longCount(Iterable<TSource> source) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		long count = 0;
+		for (TSource element : source)
+			count++;
+
+		return count;
 	}
 
 	public static <TSource> long longCount(Iterable<TSource> source, Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (predicate == null)
+			throw new IllegalArgumentException("predicate is null");
+
+		long count = 0;
+		for (TSource element : source)
+			if (predicate.test(element))
+				count++;
+
+		return count;
 	}
 
 	// TODO: Add here Max methods
