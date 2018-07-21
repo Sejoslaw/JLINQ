@@ -487,39 +487,36 @@ public final class JLinq {
 		return new ReplaceMultipleIterator<TSource>(source, newValue, predicate);
 	}
 
-	public static <TSource> Iterable<TSource> reverse(Iterable<TSource> source) {
-		throw new UnsupportedOperationException();
+	public static <TSource> Iterable<TSource> reverse(Iterable<TSource> source) throws IllegalAccessException {
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		return new ReverseIterator<TSource>(source);
 	}
 
 	public static <TSource, TResult> Iterable<TResult> select(Iterable<TSource> source,
 			Function<TSource, TResult> selector) {
-		throw new UnsupportedOperationException();
-	}
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (selector == null)
+			throw new IllegalArgumentException("selector is null");
 
-	public static <TSource, TResult> Iterable<TResult> select(Iterable<TSource> source,
-			Function2<TSource, Integer, TResult> selector) {
-		throw new UnsupportedOperationException();
+		return new SelectIterator<TSource, TResult>(source, selector);
 	}
 
 	public static <TSource, TResult> Iterable<TResult> selectMany(Iterable<TSource> source,
 			Function<TSource, Iterable<TResult>> selector) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (selector == null)
+			throw new IllegalArgumentException("selector is null");
+		
+		return new SelectMany<TSource, TResult, Iterable<TResult>>(source, selector);
 	}
 
 	public static <TSource, TCollection, TResult> Iterable<TResult> selectMany(Iterable<TSource> source,
 			Function<TSource, Iterable<TCollection>> collectionSelector,
 			Function2<TSource, TCollection, TResult> resultSelector) {
-		throw new UnsupportedOperationException();
-	}
-
-	public static <TSource, TCollection, TResult> Iterable<TResult> selectMany(Iterable<TSource> source,
-			Function2<TSource, Integer, Iterable<TCollection>> collectionSelector,
-			Function2<TSource, TCollection, TResult> resultSelector) {
-		throw new UnsupportedOperationException();
-	}
-
-	public static <TSource, TResult> Iterable<TResult> selectMany(Iterable<TSource> source,
-			Function2<TSource, Integer, Iterable<TResult>> selector) {
 		throw new UnsupportedOperationException();
 	}
 

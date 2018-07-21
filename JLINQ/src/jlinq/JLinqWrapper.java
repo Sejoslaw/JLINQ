@@ -213,15 +213,11 @@ public final class JLinqWrapper<TSource> {
 		return new JLinqWrapper<TSource>(JLinq.replaceMultiple(this.iterable, newValue, predicate));
 	}
 
-	public JLinqWrapper<TSource> reverse() {
+	public JLinqWrapper<TSource> reverse() throws IllegalAccessException {
 		return new JLinqWrapper<TSource>(JLinq.reverse(this.iterable));
 	}
 
 	public <TResult> JLinqWrapper<TResult> select(Function<TSource, TResult> selector) {
-		return new JLinqWrapper<TResult>(JLinq.select(this.iterable, selector));
-	}
-
-	public <TResult> JLinqWrapper<TResult> select(Function2<TSource, Integer, TResult> selector) {
 		return new JLinqWrapper<TResult>(JLinq.select(this.iterable, selector));
 	}
 
@@ -233,16 +229,6 @@ public final class JLinqWrapper<TSource> {
 			Function<TSource, Iterable<TCollection>> collectionSelector,
 			Function2<TSource, TCollection, TResult> resultSelector) {
 		return new JLinqWrapper<TResult>(JLinq.selectMany(this.iterable, collectionSelector, resultSelector));
-	}
-
-	public <TCollection, TResult> JLinqWrapper<TResult> selectMany(
-			Function2<TSource, Integer, Iterable<TCollection>> collectionSelector,
-			Function2<TSource, TCollection, TResult> resultSelector) {
-		return new JLinqWrapper<TResult>(JLinq.selectMany(this.iterable, collectionSelector, resultSelector));
-	}
-
-	public <TResult> JLinqWrapper<TResult> selectMany(Function2<TSource, Integer, Iterable<TResult>> selector) {
-		return new JLinqWrapper<TResult>(JLinq.selectMany(this.iterable, selector));
 	}
 
 	public boolean sequenceEqual(Iterable<TSource> second) {

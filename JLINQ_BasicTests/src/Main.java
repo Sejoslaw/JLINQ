@@ -38,11 +38,24 @@ public class Main {
 
 		new JLinqWrapper<Integer>().range(0, 10).forEach((value) -> System.out.print(value + ", "));
 		System.out.println();
+		new JLinqWrapper<Integer>().range(0, 10).reverse().forEach((value) -> System.out.print(value + ", "));
+		System.out.println();
 		new JLinqWrapper<Integer>().repeat(1, 10).forEach((value) -> System.out.print(value + ", "));
 		System.out.println();
 		new JLinqWrapper<Integer>().range(0, 10).replaceAt(5, -1).forEach((value) -> System.out.print(value + ", "));
 		System.out.println();
 		new JLinqWrapper<Integer>().range(0, 10).replaceAt(5, 1).replaceAt(6, 1).replaceMultiple(5, (value) -> value == 1).forEach((value) -> System.out.print(value + ", "));
+		System.out.println();
+		
+		new JLinqWrapper<Customer>(customers).select((customer) -> customer.age).forEach((age) -> System.out.print(age + ", "));
+		System.out.println();
+		
+		new JLinqWrapper<Integer>().range(0, 5).selectMany((value) -> {
+			List<Integer> list = new ArrayList<Integer>();
+			list.add(88);
+			list.add(99);
+			return list;
+		}).forEach((value) -> System.out.print(value + ", "));
 		System.out.println();
 
 		System.out.println(new JLinqWrapper<Customer>().firstOrDefault());
