@@ -34,13 +34,12 @@ To be implemented LINQ methods:
 - [X] longCount
 - [ ] max
 - [ ] min
-- [ ] ofType
 - [ ] orderBy 
 - [ ] orderByDescending 
-- [ ] range
-- [ ] repeat
-- [ ] replaceAt
-- [ ] replaceMultiple
+- [X] range
+- [X] repeat
+- [X] replaceAt
+- [X] replaceMultiple
 - [ ] reverse
 - [ ] select
 - [ ] selectMany
