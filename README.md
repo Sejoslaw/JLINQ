@@ -20,19 +20,18 @@ To be implemented LINQ methods:
 - [X] elementAt
 - [X] elementAtOrDefault
 - [X] empty
-- [ ] except
-- [ ] find
-- [ ] first
-- [ ] firstOrDefault
+- [X] except
+- [X] first
+- [X] firstOrDefault
 - [X] forEach
 - [ ] groupBy 
 - [ ] groupJoin
-- [ ] indexOf
-- [ ] intersect
+- [X] indexOf
+- [X] intersect
 - [ ] join
-- [ ] last
-- [ ] lastOrDefault
-- [ ] longCount
+- [X] last
+- [X] lastOrDefault
+- [X] longCount
 - [ ] max
 - [ ] min
 - [ ] ofType
