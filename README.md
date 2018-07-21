@@ -71,6 +71,8 @@ Examples:
 ---
 
 1. Retrieve some data.
+
+C#:
 ```csharp
 using System.Linq;
 
@@ -78,6 +80,7 @@ int count = myEnumerable.Where((customer) => customer.Age == 24).Count();
 ```
 Above example is equivalent with:
 
+Java:
 ```java
 package jlinq; // Main package which contains all JLinq methods and classes.
 
