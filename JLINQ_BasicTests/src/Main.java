@@ -4,11 +4,20 @@ import java.util.List;
 import jlinq.JLinq;
 import jlinq.JLinqWrapper;
 
+/**
+ * 
+ * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com
+ *
+ */
 public class Main {
 
 	public static void main(String[] args) throws IllegalAccessException {
 
 		List<Customer> customers = new ArrayList<Customer>();
+
+		List<Integer> x = new ArrayList<Integer>();
+		x.add(2);
+		x.add(3);
 
 		fillCustomers(customers);
 
@@ -26,6 +35,20 @@ public class Main {
 		System.out.println(new JLinqWrapper<Customer>(new ArrayList<Customer>()).any());
 		System.out.println(new JLinqWrapper<Customer>(customers).any());
 		System.out.println(new JLinqWrapper<Customer>(customers).elementAt(5).name);
+
+		new JLinqWrapper<Integer>().range(0, 10).forEach((value) -> System.out.print(value + ", "));
+		System.out.println();
+		new JLinqWrapper<Integer>().repeat(1, 10).forEach((value) -> System.out.print(value + ", "));
+		System.out.println();
+		new JLinqWrapper<Integer>().range(0, 10).replaceAt(5, -1).forEach((value) -> System.out.print(value + ", "));
+		System.out.println();
+		new JLinqWrapper<Integer>().range(0, 10).replaceAt(5, 1).replaceAt(6, 1).replaceMultiple(5, (value) -> value == 1).forEach((value) -> System.out.print(value + ", "));
+		System.out.println();
+
+		System.out.println(new JLinqWrapper<Customer>().firstOrDefault());
+		System.out.println(new JLinqWrapper<Integer>(x).firstOrDefault());
+		System.out.println(new JLinqWrapper<Integer>(x).lastOrDefault());
+		System.out.println(new JLinqWrapper<Integer>(x).singleOrDefault());
 	}
 
 	private static void fillCustomers(List<Customer> customers) {

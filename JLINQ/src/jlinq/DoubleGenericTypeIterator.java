@@ -18,8 +18,11 @@ abstract class DoubleGenericTypeIterator<TSource1, TSource2, TReturn> extends It
 
 	public DoubleGenericTypeIterator(Iterable<TSource1> first, Iterable<TSource2> second) {
 		this.first = first;
-		this.firstIterator = this.first.iterator();
+		if (this.first != null)
+			this.firstIterator = this.first.iterator();
+
 		this.second = second;
-		this.secondIterator = this.second.iterator();
+		if (this.second != null)
+			this.secondIterator = this.second.iterator();
 	}
 }

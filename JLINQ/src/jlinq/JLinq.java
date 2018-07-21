@@ -118,7 +118,7 @@ public final class JLinq {
 	public static <TSource> boolean contains(Iterable<TSource> source, TSource value, Comparator<TSource> comparator) {
 		if (source == null)
 			throw new IllegalArgumentException("source is null");
-		if (value == null)
+		if (value == getDefaultValue(source))
 			throw new IllegalArgumentException("value is null");
 		if (comparator == null)
 			comparator = new DefaultComparator<TSource>();
@@ -164,7 +164,7 @@ public final class JLinq {
 	public static <TSource> Iterable<TSource> defaultIfEmpty(Iterable<TSource> source, TSource defaultValue) {
 		if (source == null)
 			throw new IllegalArgumentException("source is null");
-		if (defaultValue == null)
+		if (defaultValue == getDefaultValue(source))
 			throw new IllegalArgumentException("defaultValue is null");
 
 		return new DefaultIfEmptyIterator<TSource>(source, defaultValue);
@@ -306,7 +306,7 @@ public final class JLinq {
 	public static <TSource> int indexOf(Iterable<TSource> source, TSource element) {
 		if (source == null)
 			throw new IllegalArgumentException("source is null");
-		if (element == null)
+		if (element == getDefaultValue(source))
 			throw new IllegalArgumentException("element is null");
 
 		int index = 0;
@@ -441,22 +441,31 @@ public final class JLinq {
 
 	// TODO: Add here Min methods
 
-	public static <TSource> Iterable<TSource> ofType(Iterable source) {
-		throw new UnsupportedOperationException();
-	}
-
 	// TODO: Add here OrderBy and OrderByDescending methods
 
 	public static Iterable<Integer> range(int start, int count) {
-		throw new UnsupportedOperationException();
+		if (count < 0)
+			throw new IllegalArgumentException("count < 0");
+
+		return new RangeIterator(start, count);
 	}
 
 	public static <TResult> Iterable<TResult> repeat(TResult element, int count) {
-		throw new UnsupportedOperationException();
+		if (count < 0)
+			throw new IllegalArgumentException("count < 0");
+
+		return new RepeatIterator<TResult>(element, count);
 	}
 
 	public static <TSource> Iterable<TSource> replaceAt(Iterable<TSource> source, int index, TSource newValue) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (index < 0)
+			throw new IllegalArgumentException("index < 0");
+		if (newValue == getDefaultValue(source))
+			throw new IllegalArgumentException("newValue is null");
+
+		return new ReplaceAtIterator<TSource>(source, index, newValue);
 	}
 
 	/**
@@ -468,7 +477,14 @@ public final class JLinq {
 	 */
 	public static <TSource> Iterable<TSource> replaceMultiple(Iterable<TSource> source, TSource newValue,
 			Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (newValue == getDefaultValue(source))
+			throw new IllegalArgumentException("newValue is null");
+		if (predicate == null)
+			throw new IllegalArgumentException("predicate is null");
+
+		return new ReplaceMultipleIterator<TSource>(source, newValue, predicate);
 	}
 
 	public static <TSource> Iterable<TSource> reverse(Iterable<TSource> source) {

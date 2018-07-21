@@ -195,10 +195,6 @@ public final class JLinqWrapper<TSource> {
 
 	// TODO: Add here Min methods
 
-	public JLinqWrapper<TSource> ofType() {
-		return new JLinqWrapper<TSource>(JLinq.ofType(this.iterable));
-	}
-
 	// TODO: Add here OrderBy and OrderByDescending methods
 
 	public JLinqWrapper<Integer> range(int start, int count) {
