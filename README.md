@@ -43,11 +43,11 @@ To be implemented LINQ methods:
 - [X] reverse
 - [X] select
 - [X] selectMany
-- [ ] sequenceEqual
-- [ ] single
-- [ ] singleOrDefault
-- [ ] skip
-- [ ] skipWhile
+- [X] sequenceEqual
+- [X] single
+- [X] singleOrDefault
+- [X] skip
+- [X] skipWhile
 - [X] take
 - [X] takeWhile
 - [X] toArray
