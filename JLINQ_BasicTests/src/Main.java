@@ -16,8 +16,9 @@ public class Main {
 		List<Customer> customers = new ArrayList<Customer>();
 
 		List<Integer> x = new ArrayList<Integer>();
-		x.add(2);
-		x.add(3);
+
+		for (int i = 0; i < 1000000; ++i)
+			x.add(i);
 
 		fillCustomers(customers);
 
@@ -44,12 +45,14 @@ public class Main {
 		System.out.println();
 		new JLinqWrapper<Integer>().range(0, 10).replaceAt(5, -1).forEach((value) -> System.out.print(value + ", "));
 		System.out.println();
-		new JLinqWrapper<Integer>().range(0, 10).replaceAt(5, 1).replaceAt(6, 1).replaceMultiple(5, (value) -> value == 1).forEach((value) -> System.out.print(value + ", "));
+		new JLinqWrapper<Integer>().range(0, 10).replaceAt(5, 1).replaceAt(6, 1)
+				.replaceMultiple(5, (value) -> value == 1).forEach((value) -> System.out.print(value + ", "));
 		System.out.println();
-		
-		new JLinqWrapper<Customer>(customers).select((customer) -> customer.age).forEach((age) -> System.out.print(age + ", "));
+
+		new JLinqWrapper<Customer>(customers).select((customer) -> customer.age)
+				.forEach((age) -> System.out.print(age + ", "));
 		System.out.println();
-		
+
 		new JLinqWrapper<Integer>().range(0, 5).selectMany((value) -> {
 			List<Integer> list = new ArrayList<Integer>();
 			list.add(88);
@@ -58,10 +61,48 @@ public class Main {
 		}).forEach((value) -> System.out.print(value + ", "));
 		System.out.println();
 
+		new JLinqWrapper<Integer>().range(0, 10).skip(3).forEach((value) -> System.out.print(value + ", "));
+		System.out.println();
+		new JLinqWrapper<Integer>().range(0, 10).skipWhile(value -> value <= 3)
+				.forEach((value) -> System.out.print(value + ", "));
+		System.out.println();
+
 		System.out.println(new JLinqWrapper<Customer>().firstOrDefault());
 		System.out.println(new JLinqWrapper<Integer>(x).firstOrDefault());
 		System.out.println(new JLinqWrapper<Integer>(x).lastOrDefault());
-		System.out.println(new JLinqWrapper<Integer>(x).singleOrDefault());
+
+		System.out.println();
+		System.out.println();
+
+		checkTimes();
+	}
+
+	private static void checkTimes() {
+		List<Integer> list = new ArrayList<Integer>();
+
+		for (int i = 0; i < 10000000; ++i)
+			list.add(i);
+
+		// Select -> Where -> Count
+		PrintElapsedTime(() -> {
+			try {
+				new JLinqWrapper<Integer>(list).where(value -> value / 3 == 0).count();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		});
+
+		PrintElapsedTime(() -> {
+			list.stream().filter(value -> value / 3 == 0).count();
+		});
+	}
+
+	private static <TSource> void PrintElapsedTime(Runnable runnable) {
+		long start = System.nanoTime();
+		runnable.run();
+		long end = System.nanoTime();
+
+		System.out.println("Elapsed Time: " + (end - start));
 	}
 
 	private static void fillCustomers(List<Customer> customers) {

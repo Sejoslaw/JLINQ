@@ -510,47 +510,124 @@ public final class JLinq {
 			throw new IllegalArgumentException("source is null");
 		if (selector == null)
 			throw new IllegalArgumentException("selector is null");
-		
+
 		return new SelectMany<TSource, TResult, Iterable<TResult>>(source, selector);
 	}
 
-	public static <TSource, TCollection, TResult> Iterable<TResult> selectMany(Iterable<TSource> source,
-			Function<TSource, Iterable<TCollection>> collectionSelector,
-			Function2<TSource, TCollection, TResult> resultSelector) {
-		throw new UnsupportedOperationException();
-	}
-
 	public static <TSource> boolean sequenceEqual(Iterable<TSource> first, Iterable<TSource> second) {
-		throw new UnsupportedOperationException();
+		return sequenceEqual(first, second, null);
 	}
 
 	public static <TSource> boolean sequenceEqual(Iterable<TSource> first, Iterable<TSource> second,
 			Comparator<TSource> comparator) {
-		throw new UnsupportedOperationException();
+		if (first == null)
+			throw new IllegalArgumentException("first is null");
+		if (second == null)
+			throw new IllegalArgumentException("second is null");
+		if (comparator == null)
+			comparator = new DefaultComparator<TSource>();
+
+		Iterator<TSource> firstIterator = first.iterator();
+		Iterator<TSource> secondIterator = second.iterator();
+
+		while (firstIterator.hasNext()) {
+			if (!secondIterator.hasNext() && comparator.compare(firstIterator.next(), secondIterator.next()) == 0)
+				return false;
+		}
+
+		return true;
 	}
 
 	public static <TSource> TSource single(Iterable<TSource> source) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		Iterator<TSource> iterator = source.iterator();
+		if (!iterator.hasNext())
+			throw new IllegalArgumentException("no elements");
+		TSource next = iterator.next();
+		if (!iterator.hasNext())
+			return next;
+
+		throw new IllegalArgumentException("more than one elements");
 	}
 
 	public static <TSource> TSource single(Iterable<TSource> source, Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (predicate == null)
+			throw new IllegalArgumentException("predicate is null");
+
+		TSource def = getDefaultValue(source);
+		long count = 0;
+		for (TSource element : source) {
+			if (predicate.test(element)) {
+				def = element;
+				count++;
+			}
+		}
+
+		if (count == 0)
+			throw new IllegalArgumentException("no matches");
+		else if (count == 1)
+			return def;
+
+		throw new IllegalArgumentException("more than one elements");
 	}
 
 	public static <TSource> TSource singleOrDefault(Iterable<TSource> source) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+
+		Iterator<TSource> iterator = source.iterator();
+		if (!iterator.hasNext())
+			return getDefaultValue(source);
+		TSource next = iterator.next();
+		if (!iterator.hasNext())
+			return next;
+
+		throw new IllegalArgumentException("more than one elements");
 	}
 
 	public static <TSource> TSource singleOrDefault(Iterable<TSource> source, Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (predicate == null)
+			throw new IllegalArgumentException("predicate is null");
+
+		TSource def = getDefaultValue(source);
+		long count = 0;
+		for (TSource element : source) {
+			if (predicate.test(element)) {
+				def = element;
+				count++;
+			}
+		}
+
+		if (count == 0)
+			return getDefaultValue(source);
+		else if (count == 1)
+			return def;
+
+		throw new IllegalArgumentException("more than one elements");
 	}
 
 	public static <TSource> Iterable<TSource> skip(Iterable<TSource> source, int count) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (count < 0)
+			throw new IllegalArgumentException("count < 0");
+
+		return new SkipIterator<TSource>(source, count);
 	}
 
 	public static <TSource> Iterable<TSource> skipWhile(Iterable<TSource> source, Predicate<TSource> predicate) {
-		throw new UnsupportedOperationException();
+		if (source == null)
+			throw new IllegalArgumentException("source is null");
+		if (predicate == null)
+			throw new IllegalArgumentException("predicate is null");
+
+		return new SkipWhileIterator<TSource>(source, predicate);
 	}
 
 	// TODO: Add here Sum methods

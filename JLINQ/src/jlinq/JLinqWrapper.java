@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import jlinq.functions.Function2;
 
@@ -33,6 +35,10 @@ public final class JLinqWrapper<TSource> {
 
 	public JLinqWrapper(Iterable<TSource> iterable) {
 		this.iterable = iterable;
+	}
+
+	public JLinqWrapper(Stream<TSource> stream) {
+		this.iterable = stream.collect(Collectors.toList());
 	}
 
 	public TSource aggregate(Function2<TSource, TSource, TSource> func) {
@@ -223,12 +229,6 @@ public final class JLinqWrapper<TSource> {
 
 	public <TResult> JLinqWrapper<TResult> selectMany(Function<TSource, Iterable<TResult>> selector) {
 		return new JLinqWrapper<TResult>(JLinq.selectMany(this.iterable, selector));
-	}
-
-	public <TCollection, TResult> JLinqWrapper<TResult> selectMany(
-			Function<TSource, Iterable<TCollection>> collectionSelector,
-			Function2<TSource, TCollection, TResult> resultSelector) {
-		return new JLinqWrapper<TResult>(JLinq.selectMany(this.iterable, collectionSelector, resultSelector));
 	}
 
 	public boolean sequenceEqual(Iterable<TSource> second) {
