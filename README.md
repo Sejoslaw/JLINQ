@@ -10,7 +10,9 @@ To be implemented LINQ methods:
 - [X] all
 - [X] any
 - [X] asIterable
-- [ ] average
+- [X] asNumbered (arithmetic operations - average, max, min, sum)
+- [ ] asParallel
+- [X] average
 - [X] cast
 - [X] concat
 - [X] contains
@@ -32,8 +34,8 @@ To be implemented LINQ methods:
 - [X] last
 - [X] lastOrDefault
 - [X] longCount
-- [ ] max
-- [ ] min
+- [X] max
+- [X] min
 - [ ] orderBy 
 - [ ] orderByDescending 
 - [X] range
@@ -48,6 +50,7 @@ To be implemented LINQ methods:
 - [X] singleOrDefault
 - [X] skip
 - [X] skipWhile
+- [X] sum
 - [X] take
 - [X] takeWhile
 - [X] toArray
@@ -62,7 +65,7 @@ To be implemented LINQ methods:
 TODO / FINISHED:
 ---
 - [ ] Documentation !!!
-- [X] Add support for basic math operations for whole collection. (See: [INumberedJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ/interfaces/INumberJLinqWrapper))
+- [X] Add support for basic math operations for whole collection. (See: [INumberedJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ/src/jlinq/interfaces/INumberJLinqWrapper.java))
 - [ ] Add handler for IQueryable and IQueryProvider.
 - [ ] Add support for parallel operations.
 
