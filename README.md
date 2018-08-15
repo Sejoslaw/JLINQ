@@ -59,8 +59,10 @@ To be implemented LINQ methods:
 - [X] zip
 
 
-TODO:
+TODO / FINISHED:
 ---
+- [ ] Documentation !!!
+- [X] Add support for basic math operations for whole collection. (See: [INumberedJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ/interfaces/INumberJLinqWrapper))
 - [ ] Add handler for IQueryable and IQueryProvider.
 - [ ] Add support for parallel operations.
 

@@ -70,6 +70,16 @@ public class Main {
 		System.out.println(new JLinqWrapper<Customer>().firstOrDefault());
 		System.out.println(new JLinqWrapper<Integer>(x).firstOrDefault());
 		System.out.println(new JLinqWrapper<Integer>(x).lastOrDefault());
+		
+		System.out.println("NumberedJLinqWrapper example:");
+		System.out.println("Sumed value = " + new JLinqWrapper<Integer>().range(0, 5).asNumbered(number -> number).sum());
+		System.out.println("Average value = " + new JLinqWrapper<Integer>().range(0, 5).asNumbered(number -> number).average());
+		System.out.println("Max value = " + new JLinqWrapper<Integer>().range(0, 5).asNumbered(number -> number).max());
+		System.out.println("Min value = " + new JLinqWrapper<Integer>().range(0, 5).asNumbered(number -> number).min());
+		System.out.println("Average customers age: " + new JLinqWrapper<Customer>(customers).asNumbered(customer -> customer.age).average());
+		System.out.println();
+		
+		//new JLinqWrapper<Integer>().range(0, 1000).asParallel(10).forAll((number) -> System.out.println(number));
 
 		System.out.println();
 		System.out.println();

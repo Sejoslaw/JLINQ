@@ -19,7 +19,7 @@ class SkipIterator<TSource> extends SingleGenericTypeIterator<TSource, TSource> 
 	public boolean hasNext() {
 		if (this.count > 0) {
 			while (this.sourceIterator.hasNext() && this.count > 0) {
-				TSource element = this.sourceIterator.next();
+				this.sourceIterator.next();
 				this.count--;
 			}
 		}

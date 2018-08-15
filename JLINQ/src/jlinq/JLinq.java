@@ -30,7 +30,7 @@ public final class JLinq {
 	/**
 	 * Version of the current build.
 	 */
-	public static final String VERSION = "0.1.0";
+	public static final String VERSION = "0.2.0";
 
 	private JLinq() {
 	}
@@ -90,8 +90,6 @@ public final class JLinq {
 		source.forEach((element) -> iterable.add(element));
 		return iterable;
 	}
-
-	// TODO: Add here Average methods
 
 	public static <TSource, TResult> Iterable<TResult> cast(Iterable<TSource> source, Function<TSource, TResult> func) {
 		if (source == null)
@@ -442,10 +440,6 @@ public final class JLinq {
 		return count;
 	}
 
-	// TODO: Add here Max methods
-
-	// TODO: Add here Min methods
-
 	// TODO: Add here OrderBy and OrderByDescending methods
 
 	public static Iterable<Integer> range(int start, int count) {
@@ -634,8 +628,6 @@ public final class JLinq {
 
 		return new SkipWhileIterator<TSource>(source, predicate);
 	}
-
-	// TODO: Add here Sum methods
 
 	public static <TSource> Iterable<TSource> take(Iterable<TSource> source, int count) throws IllegalAccessException {
 		if (source == null)
