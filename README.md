@@ -64,7 +64,7 @@ To be implemented LINQ methods:
 
 TODO / FINISHED:
 ---
-- [ ] Documentation !!!
+- [X] Documentation !!!
 - [X] Add support for basic math operations for whole collection. (See: [INumberedJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ/src/jlinq/interfaces/INumberJLinqWrapper.java))
 - [ ] Add handler for IQueryable and IQueryProvider.
 - [ ] Add support for parallel operations.

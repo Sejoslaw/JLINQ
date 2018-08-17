@@ -13,5 +13,10 @@ import java.util.function.Consumer;
  */
 public interface IParallelJLinqWrapper<TSource> extends IJLinqWrapper<TSource> {
 
+	/**
+	 * Executes specified method on all elements in current collection in parallel.
+	 * 
+	 * @param action
+	 */
 	public void forAll(Consumer<TSource> action);
 }

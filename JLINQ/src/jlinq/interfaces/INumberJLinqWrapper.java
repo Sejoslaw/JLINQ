@@ -12,11 +12,25 @@ package jlinq.interfaces;
  */
 public interface INumberJLinqWrapper<TSource extends Number & Comparable<TSource>> extends IJLinqWrapper<TSource> {
 
+	/**
+	 * @return Returns average value from current collection.
+	 */
 	public TSource average();
 
+	/**
+	 * @return Returns maximum value from current collection, using default
+	 *         Comparable implementation.
+	 */
 	public TSource max();
 
+	/**
+	 * @return Returns minimum value from current collection, using default
+	 *         Comparable implementation.
+	 */
 	public TSource min();
 
+	/**
+	 * @return Returns total summed value of all elements in current collection.
+	 */
 	public TSource sum();
 }

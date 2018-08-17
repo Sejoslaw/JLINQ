@@ -21,7 +21,8 @@ import jlinq.interfaces.INumberJLinqWrapper;
  * it as a standard .NET IEnumerable: MyList.Where(...).Select(...).ToList();
  * The only requirement is to give JLinqWrapper an {@link Iterable} on which you
  * want to operate. Internal {@link Iterable} is always use as a first
- * parameters in JLinq methods.
+ * parameters in JLinq methods. For more detailed information about the methods,
+ * please see: {@link IJLinqWrapper}.
  * 
  * 
  * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com

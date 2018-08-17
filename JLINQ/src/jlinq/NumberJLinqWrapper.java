@@ -5,7 +5,8 @@ import jlinq.interfaces.INumberJLinqWrapper;
 /**
  * 
  * Default implementation of {@link INumberJLinqWrapper} which can perform basic
- * arithmetic operations.
+ * arithmetic operations. For more detailed information about the methods,
+ * please see: {@link INumberJLinqWrapper}.
  * 
  * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com
  *
