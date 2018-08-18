@@ -12,7 +12,7 @@ import jlinq.interfaces.INumberJLinqWrapper;
  *
  * @param <TSource>
  */
-public class NumberJLinqWrapper<TSource extends Number & Comparable<TSource>> extends JLinqWrapper<TSource>
+class NumberJLinqWrapper<TSource extends Number & Comparable<TSource>> extends JLinqWrapper<TSource>
 		implements INumberJLinqWrapper<TSource> {
 
 	public NumberJLinqWrapper(Iterable<TSource> iterable) {

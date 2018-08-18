@@ -14,6 +14,8 @@ import java.util.stream.Stream;
 import jlinq.functions.Function2;
 import jlinq.interfaces.IJLinqWrapper;
 import jlinq.interfaces.INumberJLinqWrapper;
+import jlinq.interfaces.IParallelJLinqWrapper;
+import jlinq.parallel.IParallelQueryOptions;
 
 /**
  * Wraps functionality of JLINQ to allow for faster method calls. Generic
@@ -31,6 +33,9 @@ import jlinq.interfaces.INumberJLinqWrapper;
  */
 public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 
+	/**
+	 * Source collection.
+	 */
 	protected Iterable<TSource> iterable;
 
 	public JLinqWrapper() {
@@ -70,6 +75,10 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 		IJLinqWrapper<TNumber> numbers = this.cast(func);
 		List<TNumber> numbersList = numbers.toList();
 		return new NumberJLinqWrapper<TNumber>(numbersList);
+	}
+
+	public IParallelJLinqWrapper<TSource> asParallel(IParallelQueryOptions options) throws IllegalAccessException {
+		return new ParallelJLinqWrapper<TSource>(this, options);
 	}
 
 	public <TResult> IJLinqWrapper<TResult> cast(Function<TSource, TResult> func) {
@@ -282,7 +291,7 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 		return JLinq.toArray(this.iterable);
 	}
 
-	public List<TSource> toList() throws IllegalAccessException {
+	public List<TSource> toList() {
 		return JLinq.toList(this.iterable);
 	}
 

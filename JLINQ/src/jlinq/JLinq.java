@@ -30,7 +30,7 @@ public final class JLinq {
 	/**
 	 * Version of the current build.
 	 */
-	public static final String VERSION = "0.2.0";
+	public static final String VERSION = "0.3.0";
 
 	private JLinq() {
 	}
@@ -667,10 +667,7 @@ public final class JLinq {
 		return (TSource[]) array;
 	}
 
-	public static <TSource> List<TSource> toList(Iterable<TSource> source) throws IllegalAccessException {
-		if (source == null)
-			throw new IllegalAccessException("source is null");
-
+	public static <TSource> List<TSource> toList(Iterable<TSource> source) {
 		List<TSource> list = new ArrayList<TSource>();
 		for (TSource element : source)
 			list.add(element);

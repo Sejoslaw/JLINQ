@@ -15,7 +15,8 @@ abstract class SingleGenericTypeIterator<TSource, TResult> extends IteratorBase<
 
 	public SingleGenericTypeIterator(Iterable<TSource> source) {
 		this.source = source;
-		if (this.source != null)
+		if (this.source != null) {
 			this.sourceIterator = this.source.iterator();
+		}
 	}
 }

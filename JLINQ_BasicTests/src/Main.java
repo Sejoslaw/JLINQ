@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import jlinq.JLinq;
 import jlinq.JLinqWrapper;
+import jlinq.parallel.DefaultParallelQueryOptions;
 
 /**
  * 
@@ -11,17 +13,38 @@ import jlinq.JLinqWrapper;
  */
 public class Main {
 
-	public static void main(String[] args) throws IllegalAccessException {
+	public static void main(String[] args) throws IllegalAccessException, InterruptedException, ExecutionException {
 
 		List<Customer> customers = new ArrayList<Customer>();
 
 		List<Integer> x = new ArrayList<Integer>();
 
-		for (int i = 0; i < 1000000; ++i)
+		for (int i = 0; i < 1000; ++i)
 			x.add(i);
 
 		fillCustomers(customers);
 
+		testBasicOperations(customers, x);
+
+		testParallelOperations(customers, x);
+
+		checkTimes();
+	}
+
+	private static void testParallelOperations(List<Customer> customers, List<Integer> x)
+			throws IllegalAccessException, InterruptedException, ExecutionException {
+		// Print Customers in parallel
+		new JLinqWrapper<Customer>(customers).asParallel(new DefaultParallelQueryOptions(3)).forAll(
+				customer -> System.out.println("Thread Id: " + Thread.currentThread().getId() + " - " + customer.name));
+
+		System.out.println();
+
+		// Print integers in parallel
+		new JLinqWrapper<Integer>(x).asParallel(new DefaultParallelQueryOptions(5)).where(val -> val.intValue() % 3 == 0)
+				.forAll(number -> System.out.println("Thread Id: " + Thread.currentThread().getId() + " - " + number));
+	}
+
+	private static void testBasicOperations(List<Customer> customers, List<Integer> x) throws IllegalAccessException {
 		// Raw version using only JLinq main class.
 		Iterable<Customer> customersWithAge24Iterator = JLinq.where(customers, (customer) -> customer.age == 24);
 		List<Customer> customersWithAge24 = JLinq.toList(customersWithAge24Iterator);
@@ -70,21 +93,18 @@ public class Main {
 		System.out.println(new JLinqWrapper<Customer>().firstOrDefault());
 		System.out.println(new JLinqWrapper<Integer>(x).firstOrDefault());
 		System.out.println(new JLinqWrapper<Integer>(x).lastOrDefault());
-		
+
 		System.out.println("NumberedJLinqWrapper example:");
-		System.out.println("Sumed value = " + new JLinqWrapper<Integer>().range(0, 5).asNumbered(number -> number).sum());
-		System.out.println("Average value = " + new JLinqWrapper<Integer>().range(0, 5).asNumbered(number -> number).average());
+		System.out
+				.println("Sumed value = " + new JLinqWrapper<Integer>().range(0, 5).asNumbered(number -> number).sum());
+		System.out.println(
+				"Average value = " + new JLinqWrapper<Integer>().range(0, 5).asNumbered(number -> number).average());
 		System.out.println("Max value = " + new JLinqWrapper<Integer>().range(0, 5).asNumbered(number -> number).max());
 		System.out.println("Min value = " + new JLinqWrapper<Integer>().range(0, 5).asNumbered(number -> number).min());
-		System.out.println("Average customers age: " + new JLinqWrapper<Customer>(customers).asNumbered(customer -> customer.age).average());
-		System.out.println();
-		
-		//new JLinqWrapper<Integer>().range(0, 1000).asParallel(10).forAll((number) -> System.out.println(number));
+		System.out.println("Average customers age: "
+				+ new JLinqWrapper<Customer>(customers).asNumbered(customer -> customer.age).average());
 
 		System.out.println();
-		System.out.println();
-
-		checkTimes();
 	}
 
 	private static void checkTimes() {

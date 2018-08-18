@@ -13,7 +13,7 @@ class ReverseIterator<TSource> extends SingleGenericTypeIterator<TSource, TSourc
 	private List<TSource> array;
 	private int index;
 
-	public ReverseIterator(Iterable<TSource> source) throws IllegalAccessException {
+	public ReverseIterator(Iterable<TSource> source) {
 		super(source);
 
 		this.array = JLinq.toList(this.source);
@@ -28,5 +28,4 @@ class ReverseIterator<TSource> extends SingleGenericTypeIterator<TSource, TSourc
 		}
 		return false;
 	}
-
 }

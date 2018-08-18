@@ -7,8 +7,7 @@ package jlinq.interfaces;
  * 
  * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com
  * 
- * @param <TSource> Type of a collection on which current methods will be
- *        executed.
+ * @param <TSource> Type of the elements inside current collection.
  */
 public interface INumberJLinqWrapper<TSource extends Number & Comparable<TSource>> extends IJLinqWrapper<TSource> {
 

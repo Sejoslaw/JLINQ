@@ -9,6 +9,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import jlinq.functions.Function2;
+import jlinq.parallel.IParallelQueryOptions;
 
 /**
  * 
@@ -17,8 +18,7 @@ import jlinq.functions.Function2;
  * 
  * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com
  *
- * @param <TSource> Type of a collection on which current methods will be
- *        executed.
+ * @param <TSource> Type of the elements inside current collection.
  */
 public interface IJLinqWrapper<TSource> {
 
@@ -62,10 +62,18 @@ public interface IJLinqWrapper<TSource> {
 	public <TNumber extends Number & Comparable<TNumber>> INumberJLinqWrapper<TNumber> asNumbered(
 			Function<TSource, TNumber> func) throws IllegalAccessException;
 
-	// public IParallelJLinqWrapper<TSource> asParallel(); // TODO: Add
-	// implementation
+	/**
+	 * @param options
+	 * @return Returns the collection on which the methods will be executed in
+	 *         parallel.
+	 */
+	public IParallelJLinqWrapper<TSource> asParallel(IParallelQueryOptions options) throws IllegalAccessException;
 
-	// public IQueryableJLinqWrapper asQueryable(); // TODO: Add implementation
+	/**
+	 * @return Returns current collection in form of {@link IQueryable}.
+	 */
+	// public IQueryableJLinqWrapper<TSource> asQueryable(); // TODO: Think of a
+	// better idea.
 
 	/**
 	 * @param func
@@ -380,7 +388,7 @@ public interface IJLinqWrapper<TSource> {
 	 * @return Converts current collection to {@link List}.
 	 * @throws IllegalAccessException
 	 */
-	public List<TSource> toList() throws IllegalAccessException;
+	public List<TSource> toList();
 
 	/**
 	 * @param keySelector     Selects key for the {@link Map}.
