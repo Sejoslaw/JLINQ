@@ -86,9 +86,7 @@ public final class JLinq {
 		if (source == null)
 			throw new IllegalArgumentException("source is null");
 
-		List<TSource> iterable = new ArrayList<TSource>();
-		source.forEach((element) -> iterable.add(element));
-		return iterable;
+		return source;
 	}
 
 	public static <TSource, TResult> Iterable<TResult> cast(Iterable<TSource> source, Function<TSource, TResult> func) {

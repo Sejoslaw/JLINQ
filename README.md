@@ -12,6 +12,7 @@ To be implemented LINQ methods:
 - [X] asIterable
 - [X] asNumbered (arithmetic operations - average, max, min, sum)
 - [X] asParallel (parallel operations)
+- [ ] asQueryable (operations will be executed on specified data source)
 - [X] average
 - [X] cast
 - [X] concat
@@ -66,7 +67,7 @@ TODO / FINISHED:
 ---
 - [X] Documentation !!!
 - [X] Add support for basic math operations for whole collection. (See: [INumberedJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ/src/jlinq/interfaces/INumberJLinqWrapper.java))
-- [ ] Add handler for IQueryable and IQueryProvider.
+- [ ] Add handler for IQueryable.
 - [X] Add support for parallel operations. (See: [IParallelJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ/src/jlinq/interfaces/IParallelJLinqWrapper.java))
 
 

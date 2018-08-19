@@ -67,7 +67,7 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 	}
 
 	public IJLinqWrapper<TSource> asIterable() {
-		return new JLinqWrapper<TSource>(JLinq.asIterable(this.iterable));
+		return this;
 	}
 
 	public <TNumber extends Number & Comparable<TNumber>> INumberJLinqWrapper<TNumber> asNumbered(
