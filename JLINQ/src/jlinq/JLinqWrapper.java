@@ -39,7 +39,7 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 	protected Iterable<TSource> iterable;
 
 	public JLinqWrapper() {
-		this.iterable = new ArrayList<TSource>();
+		this.iterable = new ArrayList<>();
 	}
 
 	public JLinqWrapper(Iterable<TSource> iterable) {
@@ -74,19 +74,19 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 			Function<TSource, TNumber> func) throws IllegalAccessException {
 		IJLinqWrapper<TNumber> numbers = this.cast(func);
 		List<TNumber> numbersList = numbers.toList();
-		return new NumberJLinqWrapper<TNumber>(numbersList);
+		return new NumberJLinqWrapper<>(numbersList);
 	}
 
 	public IParallelJLinqWrapper<TSource> asParallel(IParallelQueryOptions options) throws IllegalAccessException {
-		return new ParallelJLinqWrapper<TSource>(this, options, true);
+		return new ParallelJLinqWrapper<>(this, options, true);
 	}
 
 	public <TResult> IJLinqWrapper<TResult> cast(Function<TSource, TResult> func) {
-		return new JLinqWrapper<TResult>(JLinq.cast(this.iterable, func));
+		return new JLinqWrapper<>(JLinq.cast(this.iterable, func));
 	}
 
 	public IJLinqWrapper<TSource> concat(Iterable<TSource> second) {
-		return new JLinqWrapper<TSource>(JLinq.concat(this.iterable, second));
+		return new JLinqWrapper<>(JLinq.concat(this.iterable, second));
 	}
 
 	public boolean contains(TSource value) {
@@ -106,15 +106,15 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 	}
 
 	public IJLinqWrapper<TSource> defaultIfEmpty() {
-		return new JLinqWrapper<TSource>(JLinq.defaultIfEmpty(this.iterable));
+		return new JLinqWrapper<>(JLinq.defaultIfEmpty(this.iterable));
 	}
 
 	public IJLinqWrapper<TSource> defaultIfEmpty(TSource defaultValue) {
-		return new JLinqWrapper<TSource>(JLinq.defaultIfEmpty(this.iterable, defaultValue));
+		return new JLinqWrapper<>(JLinq.defaultIfEmpty(this.iterable, defaultValue));
 	}
 
 	public IJLinqWrapper<TSource> distinct() {
-		return new JLinqWrapper<TSource>(JLinq.distinct(this.iterable));
+		return new JLinqWrapper<>(JLinq.distinct(this.iterable));
 	}
 
 	public TSource elementAt(int index) {
@@ -126,11 +126,11 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 	}
 
 	public IJLinqWrapper<TSource> empty() {
-		return new JLinqWrapper<TSource>(JLinq.empty());
+		return new JLinqWrapper<>(JLinq.empty());
 	}
 
 	public IJLinqWrapper<TSource> except(Iterable<TSource> second) {
-		return new JLinqWrapper<TSource>(JLinq.except(this.iterable, second));
+		return new JLinqWrapper<>(JLinq.except(this.iterable, second));
 	}
 
 	public TSource first() {
@@ -154,14 +154,14 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> groupJoin(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, Iterable<TInner>, TResult> resultSelector) {
-		return new JLinqWrapper<TResult>(
+		return new JLinqWrapper<>(
 				JLinq.groupJoin(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector));
 	}
 
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> groupJoin(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, Iterable<TInner>, TResult> resultSelector, Comparator<TKey> comparator) {
-		return new JLinqWrapper<TResult>(
+		return new JLinqWrapper<>(
 				JLinq.groupJoin(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector, comparator));
 	}
 
@@ -170,7 +170,7 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 	}
 
 	public IJLinqWrapper<TSource> intersect(Iterable<TSource> second) {
-		return new JLinqWrapper<TSource>(JLinq.intersect(this.iterable, second));
+		return new JLinqWrapper<>(JLinq.intersect(this.iterable, second));
 	}
 
 	public Iterator<TSource> iterator() {
@@ -180,14 +180,13 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> join(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, TInner, TResult> resultSelector) {
-		return new JLinqWrapper<TResult>(
-				JLinq.join(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector));
+		return new JLinqWrapper<>(JLinq.join(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector));
 	}
 
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> join(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, TInner, TResult> resultSelector, Comparator<TKey> comparator) {
-		return new JLinqWrapper<TResult>(
+		return new JLinqWrapper<>(
 				JLinq.join(this.iterable, inner, outerKeySelector, innerKeySelector, resultSelector, comparator));
 	}
 
@@ -218,31 +217,31 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 	// TODO: Add here OrderBy and OrderByDescending methods
 
 	public IJLinqWrapper<Integer> range(int start, int count) {
-		return new JLinqWrapper<Integer>(JLinq.range(start, count));
+		return new JLinqWrapper<>(JLinq.range(start, count));
 	}
 
 	public IJLinqWrapper<TSource> repeat(TSource element, int count) {
-		return new JLinqWrapper<TSource>(JLinq.repeat(element, count));
+		return new JLinqWrapper<>(JLinq.repeat(element, count));
 	}
 
 	public IJLinqWrapper<TSource> replaceAt(int index, TSource newValue) {
-		return new JLinqWrapper<TSource>(JLinq.replaceAt(this.iterable, index, newValue));
+		return new JLinqWrapper<>(JLinq.replaceAt(this.iterable, index, newValue));
 	}
 
 	public IJLinqWrapper<TSource> replaceMultiple(TSource newValue, Predicate<TSource> predicate) {
-		return new JLinqWrapper<TSource>(JLinq.replaceMultiple(this.iterable, newValue, predicate));
+		return new JLinqWrapper<>(JLinq.replaceMultiple(this.iterable, newValue, predicate));
 	}
 
 	public IJLinqWrapper<TSource> reverse() throws IllegalAccessException {
-		return new JLinqWrapper<TSource>(JLinq.reverse(this.iterable));
+		return new JLinqWrapper<>(JLinq.reverse(this.iterable));
 	}
 
 	public <TResult> IJLinqWrapper<TResult> select(Function<TSource, TResult> selector) {
-		return new JLinqWrapper<TResult>(JLinq.select(this.iterable, selector));
+		return new JLinqWrapper<>(JLinq.select(this.iterable, selector));
 	}
 
 	public <TResult> IJLinqWrapper<TResult> selectMany(Function<TSource, Iterable<TResult>> selector) {
-		return new JLinqWrapper<TResult>(JLinq.selectMany(this.iterable, selector));
+		return new JLinqWrapper<>(JLinq.selectMany(this.iterable, selector));
 	}
 
 	public boolean sequenceEqual(Iterable<TSource> second) {
@@ -270,19 +269,19 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 	}
 
 	public IJLinqWrapper<TSource> skip(int count) {
-		return new JLinqWrapper<TSource>(JLinq.skip(this.iterable, count));
+		return new JLinqWrapper<>(JLinq.skip(this.iterable, count));
 	}
 
 	public IJLinqWrapper<TSource> skipWhile(Predicate<TSource> predicate) {
-		return new JLinqWrapper<TSource>(JLinq.skipWhile(this.iterable, predicate));
+		return new JLinqWrapper<>(JLinq.skipWhile(this.iterable, predicate));
 	}
 
 	public IJLinqWrapper<TSource> take(int count) throws IllegalAccessException {
-		return new JLinqWrapper<TSource>(JLinq.take(this.iterable, count));
+		return new JLinqWrapper<>(JLinq.take(this.iterable, count));
 	}
 
 	public IJLinqWrapper<TSource> takeWhile(Predicate<TSource> predicate) throws IllegalAccessException {
-		return new JLinqWrapper<TSource>(JLinq.takeWhile(this.iterable, predicate));
+		return new JLinqWrapper<>(JLinq.takeWhile(this.iterable, predicate));
 	}
 
 	// TODO: Add here ThenBy and ThenByDescending methods
@@ -321,15 +320,15 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 	// TODO: Add here ToLookup methods
 
 	public IJLinqWrapper<TSource> union(Iterable<TSource> second) throws IllegalAccessException {
-		return new JLinqWrapper<TSource>(JLinq.union(this.iterable, second));
+		return new JLinqWrapper<>(JLinq.union(this.iterable, second));
 	}
 
 	public IJLinqWrapper<TSource> where(Predicate<TSource> predicate) throws IllegalAccessException {
-		return new JLinqWrapper<TSource>(JLinq.where(this.iterable, predicate));
+		return new JLinqWrapper<>(JLinq.where(this.iterable, predicate));
 	}
 
 	public <TSecond, TResult> IJLinqWrapper<TResult> zip(Iterable<TSecond> second,
 			Function2<TSource, TSecond, TResult> resultSelector) throws IllegalAccessException {
-		return new JLinqWrapper<TResult>(JLinq.zip(this.iterable, second, resultSelector));
+		return new JLinqWrapper<>(JLinq.zip(this.iterable, second, resultSelector));
 	}
 }

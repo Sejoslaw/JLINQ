@@ -17,7 +17,7 @@ class UnionIterator<TSource> extends DoubleGenericTypeIterator<TSource, TSource,
 	public UnionIterator(Iterable<TSource> first, Iterable<TSource> second) {
 		super(first, second);
 
-		this.set = new HashSet<TSource>();
+		this.set = new HashSet<>();
 	}
 
 	public boolean hasNext() {

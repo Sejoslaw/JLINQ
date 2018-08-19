@@ -16,7 +16,7 @@ class DistinctIterator<TSource> extends SingleGenericTypeIterator<TSource, TSour
 	public DistinctIterator(Iterable<TSource> source) {
 		super(source);
 
-		this.set = new HashSet<TSource>();
+		this.set = new HashSet<>();
 	}
 
 	public boolean hasNext() {

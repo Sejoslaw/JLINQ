@@ -23,9 +23,8 @@ class TakeWhileIterator<TSource> extends SingleGenericTypeIterator<TSource, TSou
 			this.current = this.sourceIterator.next();
 			if (this.predicate.test(this.current)) {
 				return true;
-			} else {
-				return false;
 			}
+			return false;
 		}
 		return false;
 	}

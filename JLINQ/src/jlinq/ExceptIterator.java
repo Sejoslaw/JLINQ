@@ -16,7 +16,7 @@ class ExceptIterator<TSource> extends DoubleGenericTypeIterator<TSource, TSource
 	public ExceptIterator(Iterable<TSource> first, Iterable<TSource> second) {
 		super(first, second);
 
-		set = new HashSet<TSource>();
+		set = new HashSet<>();
 
 		for (TSource element : this.second)
 			this.set.add(element);

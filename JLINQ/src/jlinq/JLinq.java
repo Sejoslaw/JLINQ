@@ -95,7 +95,7 @@ public final class JLinq {
 		if (func == null)
 			throw new IllegalArgumentException("func is null");
 
-		return new CastIterator<TSource, TResult>(source, func);
+		return new CastIterator<>(source, func);
 	}
 
 	public static <TSource> Iterable<TSource> concat(Iterable<TSource> first, Iterable<TSource> second) {
@@ -104,7 +104,7 @@ public final class JLinq {
 		if (second == null)
 			throw new IllegalArgumentException("second is null");
 
-		return new ConcatIterator<TSource>(first, second);
+		return new ConcatIterator<>(first, second);
 	}
 
 	public static <TSource> boolean contains(Iterable<TSource> source, TSource value) {
@@ -122,7 +122,7 @@ public final class JLinq {
 		if (value == getDefaultValue(source))
 			throw new IllegalArgumentException("value is null");
 		if (comparator == null)
-			comparator = new DefaultComparator<TSource>();
+			comparator = new DefaultComparator<>();
 
 		for (TSource element : source)
 			if (comparator.compare(element, value) == 0)
@@ -168,14 +168,14 @@ public final class JLinq {
 		if (defaultValue == getDefaultValue(source))
 			throw new IllegalArgumentException("defaultValue is null");
 
-		return new DefaultIfEmptyIterator<TSource>(source, defaultValue);
+		return new DefaultIfEmptyIterator<>(source, defaultValue);
 	}
 
 	public static <TSource> Iterable<TSource> distinct(Iterable<TSource> source) {
 		if (source == null)
 			throw new IllegalArgumentException("source is null");
 
-		return new DistinctIterator<TSource>(source);
+		return new DistinctIterator<>(source);
 	}
 
 	public static <TSource> TSource elementAt(Iterable<TSource> source, int index) {
@@ -191,9 +191,8 @@ public final class JLinq {
 				element = iterator.next();
 				if (index == 0) {
 					return element;
-				} else {
-					index--;
 				}
+				index--;
 			} else {
 				throw new IndexOutOfBoundsException("Index [" + index + "] is out of bounds");
 			}
@@ -211,9 +210,8 @@ public final class JLinq {
 				element = iterator.next();
 				if (index == 0) {
 					return element;
-				} else {
-					index--;
 				}
+				index--;
 			} else {
 				break;
 			}
@@ -223,7 +221,7 @@ public final class JLinq {
 	}
 
 	public static <TSource> Iterable<TSource> empty() {
-		return new ArrayList<TSource>();
+		return new ArrayList<>();
 	}
 
 	public static <TSource> Iterable<TSource> except(Iterable<TSource> first, Iterable<TSource> second) {
@@ -232,7 +230,7 @@ public final class JLinq {
 		if (second == null)
 			throw new IllegalArgumentException("second is null");
 
-		return new ExceptIterator<TSource>(first, second);
+		return new ExceptIterator<>(first, second);
 	}
 
 	public static <TSource> TSource first(Iterable<TSource> source) {
@@ -326,7 +324,7 @@ public final class JLinq {
 		if (second == null)
 			throw new IllegalArgumentException("second is null");
 
-		return new IntersectIterator<TSource>(first, second);
+		return new IntersectIterator<>(first, second);
 	}
 
 	public static <TOuter, TInner, TKey, TResult> Iterable<TResult> join(Iterable<TOuter> outer, Iterable<TInner> inner,
@@ -451,7 +449,7 @@ public final class JLinq {
 		if (count < 0)
 			throw new IllegalArgumentException("count < 0");
 
-		return new RepeatIterator<TResult>(element, count);
+		return new RepeatIterator<>(element, count);
 	}
 
 	public static <TSource> Iterable<TSource> replaceAt(Iterable<TSource> source, int index, TSource newValue) {
@@ -462,7 +460,7 @@ public final class JLinq {
 		if (newValue == getDefaultValue(source))
 			throw new IllegalArgumentException("newValue is null");
 
-		return new ReplaceAtIterator<TSource>(source, index, newValue);
+		return new ReplaceAtIterator<>(source, index, newValue);
 	}
 
 	/**
@@ -481,14 +479,14 @@ public final class JLinq {
 		if (predicate == null)
 			throw new IllegalArgumentException("predicate is null");
 
-		return new ReplaceMultipleIterator<TSource>(source, newValue, predicate);
+		return new ReplaceMultipleIterator<>(source, newValue, predicate);
 	}
 
 	public static <TSource> Iterable<TSource> reverse(Iterable<TSource> source) throws IllegalAccessException {
 		if (source == null)
 			throw new IllegalArgumentException("source is null");
 
-		return new ReverseIterator<TSource>(source);
+		return new ReverseIterator<>(source);
 	}
 
 	public static <TSource, TResult> Iterable<TResult> select(Iterable<TSource> source,
@@ -498,7 +496,7 @@ public final class JLinq {
 		if (selector == null)
 			throw new IllegalArgumentException("selector is null");
 
-		return new SelectIterator<TSource, TResult>(source, selector);
+		return new SelectIterator<>(source, selector);
 	}
 
 	public static <TSource, TResult> Iterable<TResult> selectMany(Iterable<TSource> source,
@@ -508,7 +506,7 @@ public final class JLinq {
 		if (selector == null)
 			throw new IllegalArgumentException("selector is null");
 
-		return new SelectMany<TSource, TResult, Iterable<TResult>>(source, selector);
+		return new SelectMany<>(source, selector);
 	}
 
 	public static <TSource> boolean sequenceEqual(Iterable<TSource> first, Iterable<TSource> second) {
@@ -522,7 +520,7 @@ public final class JLinq {
 		if (second == null)
 			throw new IllegalArgumentException("second is null");
 		if (comparator == null)
-			comparator = new DefaultComparator<TSource>();
+			comparator = new DefaultComparator<>();
 
 		Iterator<TSource> firstIterator = first.iterator();
 		Iterator<TSource> secondIterator = second.iterator();
@@ -615,7 +613,7 @@ public final class JLinq {
 		if (count < 0)
 			throw new IllegalArgumentException("count < 0");
 
-		return new SkipIterator<TSource>(source, count);
+		return new SkipIterator<>(source, count);
 	}
 
 	public static <TSource> Iterable<TSource> skipWhile(Iterable<TSource> source, Predicate<TSource> predicate) {
@@ -624,7 +622,7 @@ public final class JLinq {
 		if (predicate == null)
 			throw new IllegalArgumentException("predicate is null");
 
-		return new SkipWhileIterator<TSource>(source, predicate);
+		return new SkipWhileIterator<>(source, predicate);
 	}
 
 	public static <TSource> Iterable<TSource> take(Iterable<TSource> source, int count) throws IllegalAccessException {
@@ -633,7 +631,7 @@ public final class JLinq {
 		if (count < 0)
 			throw new IllegalAccessException("count must be a positive value");
 
-		return new TakeIterator<TSource>(source, count);
+		return new TakeIterator<>(source, count);
 	}
 
 	public static <TSource> Iterable<TSource> takeWhile(Iterable<TSource> source, Predicate<TSource> predicate)
@@ -643,7 +641,7 @@ public final class JLinq {
 		if (predicate == null)
 			throw new IllegalAccessException("predicate is null");
 
-		return new TakeWhileIterator<TSource>(source, predicate);
+		return new TakeWhileIterator<>(source, predicate);
 	}
 
 	// TODO: Add here ThenBy and ThenByDescending methods
@@ -666,7 +664,7 @@ public final class JLinq {
 	}
 
 	public static <TSource> List<TSource> toList(Iterable<TSource> source) {
-		List<TSource> list = new ArrayList<TSource>();
+		List<TSource> list = new ArrayList<>();
 		for (TSource element : source)
 			list.add(element);
 
@@ -683,7 +681,7 @@ public final class JLinq {
 		if (elementSelector == null)
 			throw new IllegalAccessException("elementSelector is null");
 
-		Map<TKey, TElement> map = new HashMap<TKey, TElement>();
+		Map<TKey, TElement> map = new HashMap<>();
 		for (TSource element : source) {
 			TKey key = keySelector.apply(element);
 			TElement value = elementSelector.apply(element);
@@ -704,7 +702,7 @@ public final class JLinq {
 		if (elementSelector == null)
 			throw new IllegalAccessException("elementSelector is null");
 
-		Map<TKey, TElement> map = new HashMap<TKey, TElement>();
+		Map<TKey, TElement> map = new HashMap<>();
 		for (TSource element : source) {
 			TKey key = keySelector.apply(element);
 			TElement value = elementSelector.apply(element);
@@ -726,7 +724,7 @@ public final class JLinq {
 		if (keySelector == null)
 			throw new IllegalAccessException("keySelector is null");
 
-		Map<TKey, TSource> map = new HashMap<TKey, TSource>();
+		Map<TKey, TSource> map = new HashMap<>();
 		for (TSource element : source) {
 			TKey key = keySelector.apply(element);
 			map.put(key, element);
@@ -742,7 +740,7 @@ public final class JLinq {
 		if (keySelector == null)
 			throw new IllegalAccessException("keySelector is null");
 
-		Map<TKey, TSource> map = new HashMap<TKey, TSource>();
+		Map<TKey, TSource> map = new HashMap<>();
 		for (TSource element : source) {
 			TKey key = keySelector.apply(element);
 
@@ -760,7 +758,7 @@ public final class JLinq {
 		if (source == null)
 			throw new IllegalAccessException("source is null");
 
-		Set<TSource> set = new HashSet<TSource>();
+		Set<TSource> set = new HashSet<>();
 		for (TSource element : source)
 			set.add(element);
 
@@ -776,7 +774,7 @@ public final class JLinq {
 		if (second == null)
 			throw new IllegalAccessException("second is null");
 
-		return new UnionIterator<TSource>(first, second);
+		return new UnionIterator<>(first, second);
 	}
 
 	public static <TSource> Iterable<TSource> where(Iterable<TSource> source, Predicate<TSource> predicate)
@@ -786,7 +784,7 @@ public final class JLinq {
 		if (predicate == null)
 			throw new IllegalAccessException("predicate is null");
 
-		return new WhereIterator<TSource>(source, predicate);
+		return new WhereIterator<>(source, predicate);
 	}
 
 	public static <TFirst, TSecond, TResult> Iterable<TResult> zip(Iterable<TFirst> first, Iterable<TSecond> second,
@@ -798,7 +796,7 @@ public final class JLinq {
 		if (resultSelector == null)
 			throw new IllegalAccessException("resultSelector is null");
 
-		return new ZipIterator<TFirst, TSecond, TResult>(first, second, resultSelector);
+		return new ZipIterator<>(first, second, resultSelector);
 	}
 
 	// ---=== Private Methods ===---
@@ -806,7 +804,7 @@ public final class JLinq {
 	@SuppressWarnings("unchecked")
 	private static <TSource> TSource getDefaultValue(Iterable<TSource> source) {
 		try {
-			return (TSource) (Object) null;
+			return null;
 		} catch (Exception ex) {
 			return (TSource) (Object) 0;
 		}

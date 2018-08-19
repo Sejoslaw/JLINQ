@@ -10,5 +10,5 @@ import jlinq.queryable.IQueryable;
  *
  * @param <TSource>
  */
-public interface IQueryableJLinqWrapper<TSource> extends IJLinqWrapper<TSource> {
+public interface IQueryableJLinqWrapper<TSource> {
 }

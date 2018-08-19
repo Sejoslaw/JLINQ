@@ -83,7 +83,7 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 	}
 
 	public IJLinqWrapper<TSource> asIterable() throws IllegalAccessException {
-		return new JLinqWrapper<TSource>(new CollectionOfCollectionsIterator(this.collectionPerThread));
+		return new JLinqWrapper<>(new CollectionOfCollectionsIterator<>(this.collectionPerThread));
 	}
 
 	public <TResult> IParallelJLinqWrapper<TResult> cast(Function<TSource, TResult> func)

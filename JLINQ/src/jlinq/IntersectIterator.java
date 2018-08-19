@@ -16,7 +16,7 @@ class IntersectIterator<TSource> extends DoubleGenericTypeIterator<TSource, TSou
 	public IntersectIterator(Iterable<TSource> first, Iterable<TSource> second) {
 		super(first, second);
 
-		this.set = new HashSet<TSource>();
+		this.set = new HashSet<>();
 
 		for (TSource element : this.second)
 			this.set.add(element);
