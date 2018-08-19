@@ -2,10 +2,10 @@ package jlinq;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -78,7 +78,7 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 	}
 
 	public IParallelJLinqWrapper<TSource> asParallel(IParallelQueryOptions options) throws IllegalAccessException {
-		return new ParallelJLinqWrapper<TSource>(this, options);
+		return new ParallelJLinqWrapper<TSource>(this, options, true);
 	}
 
 	public <TResult> IJLinqWrapper<TResult> cast(Function<TSource, TResult> func) {
@@ -149,10 +149,6 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 		return JLinq.firstOrDefault(this.iterable, predicate);
 	}
 
-	public void forEach(Consumer<TSource> action) {
-		JLinq.forEach(this.iterable, action);
-	}
-
 	// TODO: Add here GroupBy methods
 
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> groupJoin(Iterable<TInner> inner,
@@ -175,6 +171,10 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 
 	public IJLinqWrapper<TSource> intersect(Iterable<TSource> second) {
 		return new JLinqWrapper<TSource>(JLinq.intersect(this.iterable, second));
+	}
+
+	public Iterator<TSource> iterator() {
+		return this.iterable.iterator();
 	}
 
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> join(Iterable<TInner> inner,

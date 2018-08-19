@@ -1,6 +1,5 @@
 package jlinq;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 /**
@@ -13,13 +12,13 @@ import java.util.Iterator;
  */
 class CollectionOfCollectionsIterator<TSourceElement> extends IteratorBase<TSourceElement> {
 
-	private Collection<? extends Collection<TSourceElement>> source;
-	private Iterator<? extends Collection<TSourceElement>> sourceIterator;
+	private Iterable<? extends Iterable<TSourceElement>> source;
+	private Iterator<? extends Iterable<TSourceElement>> sourceIterator;
 
-	private Collection<TSourceElement> currentCollection;
+	private Iterable<TSourceElement> currentCollection;
 	private Iterator<TSourceElement> currentCollectionIterator;
 
-	public CollectionOfCollectionsIterator(Collection<? extends Collection<TSourceElement>> source) {
+	public CollectionOfCollectionsIterator(Iterable<? extends Iterable<TSourceElement>> source) {
 		this.source = source;
 		if (this.source != null) {
 			this.sourceIterator = this.source.iterator();
@@ -27,7 +26,6 @@ class CollectionOfCollectionsIterator<TSourceElement> extends IteratorBase<TSour
 	}
 
 	public boolean hasNext() {
-		// If has next collection which should be checked
 		while (this.sourceIterator.hasNext() || this.currentCollectionIterator.hasNext()) {
 			if (this.currentCollection == null) {
 				this.currentCollection = this.sourceIterator.next();
@@ -36,9 +34,11 @@ class CollectionOfCollectionsIterator<TSourceElement> extends IteratorBase<TSour
 
 			if (this.currentCollectionIterator.hasNext()) {
 				this.current = this.currentCollectionIterator.next();
-			} else {
+			} else if (this.sourceIterator.hasNext()) {
 				this.currentCollection = this.sourceIterator.next();
 				this.currentCollectionIterator = this.currentCollection.iterator();
+			} else {
+				return false;
 			}
 			return true;
 		}

@@ -12,13 +12,13 @@ public class DefaultParallelQueryOptions implements IParallelQueryOptions {
 	/**
 	 * Represents the number of threads used by parallel query.
 	 */
-	private int _numberOfThreads;
+	private int numberOfThreads;
 
 	public DefaultParallelQueryOptions(int numberOfThreads) {
-		this._numberOfThreads = numberOfThreads;
+		this.numberOfThreads = numberOfThreads;
 	}
 
 	public int getNumberOfThreads() {
-		return this._numberOfThreads;
+		return this.numberOfThreads;
 	}
 }

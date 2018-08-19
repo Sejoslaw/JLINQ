@@ -29,6 +29,8 @@ public class Main {
 		testParallelOperations(customers, x);
 
 		checkTimes();
+
+		checkTimesParallel();
 	}
 
 	private static void testParallelOperations(List<Customer> customers, List<Integer> x)
@@ -40,8 +42,20 @@ public class Main {
 		System.out.println();
 
 		// Print integers in parallel
-		new JLinqWrapper<Integer>(x).asParallel(new DefaultParallelQueryOptions(5)).where(val -> val.intValue() % 3 == 0)
+		new JLinqWrapper<Integer>(x).asParallel(new DefaultParallelQueryOptions(5))
+				.where(val -> val.intValue() % 3 == 0)
 				.forAll(number -> System.out.println("Thread Id: " + Thread.currentThread().getId() + " - " + number));
+
+		System.out.println();
+
+		System.out.println("Values are lower than max: " + new JLinqWrapper<Integer>(x)
+				.asParallel(new DefaultParallelQueryOptions(5)).all(val -> val < Integer.MAX_VALUE));
+		System.out.println("One of values is equal 10: "
+				+ new JLinqWrapper<Integer>(x).asParallel(new DefaultParallelQueryOptions(5)).any(val -> val == 10));
+		int count = new JLinqWrapper<Integer>(x).asParallel(new DefaultParallelQueryOptions(5)).count();
+		System.out.println("Number of elements counted by parallel query: " + count);
+
+		System.out.println();
 	}
 
 	private static void testBasicOperations(List<Customer> customers, List<Integer> x) throws IllegalAccessException {
@@ -113,7 +127,7 @@ public class Main {
 		for (int i = 0; i < 10000000; ++i)
 			list.add(i);
 
-		// Select -> Where -> Count
+		// Where -> Count
 		PrintElapsedTime(() -> {
 			try {
 				new JLinqWrapper<Integer>(list).where(value -> value / 3 == 0).count();
@@ -125,6 +139,31 @@ public class Main {
 		PrintElapsedTime(() -> {
 			list.stream().filter(value -> value / 3 == 0).count();
 		});
+
+		System.out.println();
+	}
+
+	private static void checkTimesParallel() {
+		List<Integer> list = new ArrayList<Integer>();
+
+		for (int i = 0; i < 10000000; ++i)
+			list.add(i);
+
+		// Where -> Count
+		PrintElapsedTime(() -> {
+			try {
+				new JLinqWrapper<Integer>(list).asParallel(new DefaultParallelQueryOptions(5))
+						.where(value -> value % 3 == 0).count();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+
+		PrintElapsedTime(() -> {
+			list.stream().parallel().filter(value -> value % 3 == 0).count();
+		});
+
+		System.out.println();
 	}
 
 	private static <TSource> void PrintElapsedTime(Runnable runnable) {

@@ -11,8 +11,7 @@ package jlinq.parallel;
 public interface IParallelQueryOptions {
 
 	/**
-	 * @return Returns the number of threads used by parallel query. If the number
-	 *         of the elements passed to query is odd it will be +1.
+	 * @return Returns the number of threads used by parallel query.
 	 */
 	public int getNumberOfThreads();
 }

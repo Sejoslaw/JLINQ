@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -20,7 +19,7 @@ import jlinq.parallel.IParallelQueryOptions;
  *
  * @param <TSource> Type of the elements inside current collection.
  */
-public interface IJLinqWrapper<TSource> {
+public interface IJLinqWrapper<TSource> extends Iterable<TSource> {
 
 	/**
 	 * @param func
@@ -182,13 +181,6 @@ public interface IJLinqWrapper<TSource> {
 	 *         predicate or null if the collection is empty.
 	 */
 	public TSource firstOrDefault(Predicate<TSource> predicate);
-
-	/**
-	 * Executes specified action on each element of the current collection.
-	 * 
-	 * @param action
-	 */
-	public void forEach(Consumer<TSource> action);
 
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> groupJoin(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,

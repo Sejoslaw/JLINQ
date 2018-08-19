@@ -41,12 +41,16 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 	 */
 	private List<IJLinqWrapper<TSource>> collectionPerThread;
 
-	public ParallelJLinqWrapper(IJLinqWrapper<TSource> source, IParallelQueryOptions queryOperations)
-			throws IllegalAccessException {
+	public ParallelJLinqWrapper(IJLinqWrapper<TSource> source, IParallelQueryOptions queryOperations,
+			boolean separateForMultipleThreads) throws IllegalAccessException {
 		this.queryOptions = queryOperations;
 		this.collectionPerThread = new ArrayList<IJLinqWrapper<TSource>>();
 
-		this.divideSource(source);
+		if (separateForMultipleThreads) {
+			this.divideSource(source);
+		} else {
+			this.collectionPerThread.add(source);
+		}
 	}
 
 	public ParallelJLinqWrapper(List<IJLinqWrapper<TSource>> innerParallelCollection,
@@ -79,9 +83,7 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 	}
 
 	public IJLinqWrapper<TSource> asIterable() throws IllegalAccessException {
-		List<TSource> list = new ArrayList<TSource>();
-		this.collectionPerThread.forEach(col -> list.addAll(col.toList()));
-		return new JLinqWrapper<TSource>(list);
+		return new JLinqWrapper<TSource>(new CollectionOfCollectionsIterator(this.collectionPerThread));
 	}
 
 	public <TResult> IParallelJLinqWrapper<TResult> cast(Function<TSource, TResult> func)
@@ -101,7 +103,7 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 	}
 
 	public int count() throws IllegalAccessException, InterruptedException, ExecutionException {
-		return this.executeParallelMethod(col -> col.count()).asIterable().asNumbered(val -> val).sum();
+		return this.executeParallelMethod(col -> col.count()).asIterable().asNumbered(val -> val.intValue()).sum();
 	}
 
 	public int count(Predicate<TSource> predicate)
@@ -273,8 +275,7 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 
 		// +1 for additional data after dividing the integers
 		for (int i = 0; i < threads + 1; ++i) {
-			List<TSource> sourcePart = source.skip(i * recordsPerThread).take(recordsPerThread).toList();
-			this.collectionPerThread.add(new JLinqWrapper<TSource>(sourcePart));
+			this.collectionPerThread.add(source.skip(i * recordsPerThread).take(recordsPerThread));
 		}
 	}
 
@@ -348,6 +349,7 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 		if (newCollectionPerThread.size() > 0) {
 			return new ParallelJLinqWrapper<TResult>(newCollectionPerThread, this.queryOptions);
 		}
-		return new ParallelJLinqWrapper<TResult>(new JLinqWrapper<TResult>(notCollectionResults), this.queryOptions);
+		return new ParallelJLinqWrapper<TResult>(new JLinqWrapper<TResult>(notCollectionResults), this.queryOptions,
+				false);
 	}
 }
