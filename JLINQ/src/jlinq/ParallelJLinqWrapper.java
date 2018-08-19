@@ -44,7 +44,7 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 	public ParallelJLinqWrapper(IJLinqWrapper<TSource> source, IParallelQueryOptions queryOperations,
 			boolean separateForMultipleThreads) throws IllegalAccessException {
 		this.queryOptions = queryOperations;
-		this.collectionPerThread = new ArrayList<IJLinqWrapper<TSource>>();
+		this.collectionPerThread = new ArrayList<>();
 
 		if (separateForMultipleThreads) {
 			this.divideSource(source);
@@ -160,7 +160,7 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 	public <TKey, TElement> Map<TKey, TElement> toMap(Function<TSource, TKey> keySelector,
 			Function<TSource, TElement> elementSelector)
 			throws IllegalAccessException, InterruptedException, ExecutionException {
-		Map<TKey, TElement> map = new HashMap<TKey, TElement>();
+		Map<TKey, TElement> map = new HashMap<>();
 		this.executeParallelMethod(col -> {
 			Map<TKey, TElement> innerMap = null;
 
@@ -179,7 +179,7 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 	public <TKey, TElement> Map<TKey, TElement> toMap(Function<TSource, TKey> keySelector,
 			Function<TSource, TElement> elementSelector, Comparator<TKey> comparator)
 			throws IllegalAccessException, InterruptedException, ExecutionException {
-		Map<TKey, TElement> map = new HashMap<TKey, TElement>();
+		Map<TKey, TElement> map = new HashMap<>();
 		this.executeParallelMethod(col -> {
 			Map<TKey, TElement> innerMap = null;
 
@@ -197,7 +197,7 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 
 	public <TKey> Map<TKey, TSource> toMap(Function<TSource, TKey> keySelector)
 			throws IllegalAccessException, InterruptedException, ExecutionException {
-		Map<TKey, TSource> map = new HashMap<TKey, TSource>();
+		Map<TKey, TSource> map = new HashMap<>();
 		this.executeParallelMethod(col -> {
 			Map<TKey, TSource> innerMap = null;
 
@@ -215,7 +215,7 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 
 	public <TKey> Map<TKey, TSource> toMap(Function<TSource, TKey> keySelector, Comparator<TKey> comparator)
 			throws IllegalAccessException, InterruptedException, ExecutionException {
-		Map<TKey, TSource> map = new HashMap<TKey, TSource>();
+		Map<TKey, TSource> map = new HashMap<>();
 		this.executeParallelMethod(col -> {
 			Map<TKey, TSource> innerMap = null;
 
@@ -269,13 +269,29 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 	 * @throws IllegalAccessException
 	 */
 	private void divideSource(IJLinqWrapper<TSource> source) throws IllegalAccessException {
-		int sourceCount = source.count();
 		int threads = this.queryOptions.getNumberOfThreads();
-		int recordsPerThread = sourceCount / threads;
 
-		// +1 for additional data after dividing the integers
-		for (int i = 0; i < threads + 1; ++i) {
-			this.collectionPerThread.add(source.skip(i * recordsPerThread).take(recordsPerThread));
+		// Build lists for future storing in JLinqWrappers.
+		List<Collection<TSource>> lists = new ArrayList<>();
+		for (int i = 0; i < threads; ++i) {
+			lists.add(new ArrayList<TSource>());
+		}
+
+		// Divide elements from source collection to separate collection-per-threads.
+		int index = 0;
+		for (TSource sourceElement : source) {
+			lists.get(index).add(sourceElement);
+
+			if (index + 1 == threads) {
+				index = 0;
+			} else {
+				index++;
+			}
+		}
+
+		// Add threads to current collections
+		for (Collection<TSource> collection : lists) {
+			this.collectionPerThread.add(new JLinqWrapper<>(collection));
 		}
 	}
 
@@ -318,7 +334,7 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 		// Executes specified function in parallel on all threads.
 		ExecutorService parallelService = Executors.newFixedThreadPool(this.queryOptions.getNumberOfThreads());
 		// Promises of new values.
-		List<Future<TResult>> futures = new ArrayList<Future<TResult>>();
+		List<Future<TResult>> futures = new ArrayList<>();
 
 		// Prepare parallel operations.
 		for (IJLinqWrapper<TSource> sourceCol : this.collectionPerThread) {
@@ -328,8 +344,8 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 		}
 
 		// For two possible options.
-		List<IJLinqWrapper<TResult>> newCollectionPerThread = new ArrayList<IJLinqWrapper<TResult>>();
-		List<TResult> notCollectionResults = new ArrayList<TResult>();
+		List<IJLinqWrapper<TResult>> newCollectionPerThread = new ArrayList<>();
+		List<TResult> notCollectionResults = new ArrayList<>();
 
 		// Handle parallel results.
 		for (Future<TResult> task : futures) {
@@ -347,9 +363,8 @@ class ParallelJLinqWrapper<TSource> implements IParallelJLinqWrapper<TSource> {
 
 		// Replace current collection after parallel operations.
 		if (newCollectionPerThread.size() > 0) {
-			return new ParallelJLinqWrapper<TResult>(newCollectionPerThread, this.queryOptions);
+			return new ParallelJLinqWrapper<>(newCollectionPerThread, this.queryOptions);
 		}
-		return new ParallelJLinqWrapper<TResult>(new JLinqWrapper<TResult>(notCollectionResults), this.queryOptions,
-				false);
+		return new ParallelJLinqWrapper<>(new JLinqWrapper<>(notCollectionResults), this.queryOptions, false);
 	}
 }

@@ -152,7 +152,7 @@ public class Main {
 		// Where -> Count
 		PrintElapsedTime(() -> {
 			try {
-				new JLinqWrapper<Integer>(list).asParallel(new DefaultParallelQueryOptions(5))
+				new JLinqWrapper<Integer>(list).asParallel(new DefaultParallelQueryOptions(10))
 						.where(value -> value % 3 == 0).count();
 			} catch (Exception e) {
 				e.printStackTrace();
