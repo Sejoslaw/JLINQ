@@ -176,6 +176,8 @@ public interface IJLinqWrapper<TSource> extends Iterable<TSource> {
 	 */
 	public TSource firstOrDefault(Predicate<TSource> predicate);
 
+	// TODO: Add here GroupBy methods
+
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> groupJoin(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, Iterable<TInner>, TResult> resultSelector);
@@ -242,6 +244,8 @@ public interface IJLinqWrapper<TSource> extends Iterable<TSource> {
 	 *         specified predicate.
 	 */
 	public long longCount(Predicate<TSource> predicate);
+
+	// TODO: Add here OrderBy and OrderByDescending methods
 
 	/**
 	 * @param start Start number from which the collection will be generated.
