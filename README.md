@@ -4,6 +4,13 @@ Java Language Integrated Query.
 .NET LINQ equivalent. Create LINQ queries in Java.
 
 
+Projects:
+---
+| Name | Description |
+| -----|-------------|
+| [JLINQ](https://github.com/Sejoslaw/JLINQ/tree/master/JLINQ/src/jlinq) | Contains core interfaces and default implementation for JLINQ queries. [Examples.](https://github.com/Sejoslaw/JLINQ/blob/master/TESTS/src/Main.java) |
+| [W.I.P.] [JLINQ.Queryable](https://github.com/Sejoslaw/JLINQ/tree/master/JLINQ.Queryable/src/jlinq/queryable) | Contains core interfaces for executing JLINQ queries on data sources. |
+
 To be implemented LINQ methods:
 ---
 - [X] aggregate
@@ -12,7 +19,6 @@ To be implemented LINQ methods:
 - [X] asIterable
 - [X] asNumbered (arithmetic operations - average, max, min, sum)
 - [X] asParallel (parallel operations)
-- [ ] asQueryable (operations will be executed on specified data source)
 - [X] average
 - [X] cast
 - [X] concat
