@@ -28,9 +28,18 @@ public class Main {
 
 		testParallelOperations(customers, x);
 
+		// TODO: For future use.
+		testQueryable(customers, x);
+
 		checkTimes();
 
 		checkTimesParallel();
+	}
+
+	private static void testQueryable(List<Customer> customers, List<Integer> x) {
+		// Where second parameter (null here) is an database Connection.
+//		new InMemoryQueryableWrapper<>(new JLinqWrapper<>(x), null).where(val -> val % 3 == 0)
+//				.forEach(val -> System.out.println(val));
 	}
 
 	private static void testParallelOperations(List<Customer> customers, List<Integer> x)

@@ -2,8 +2,7 @@ package jlinq.queryable;
 
 /**
  * 
- * Represents the core interface used to evaluate queries on records inside data
- * source.
+ * Represents the core interface which holds the data received from data source.
  * 
  * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com
  *

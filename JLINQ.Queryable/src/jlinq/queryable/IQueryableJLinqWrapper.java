@@ -1,6 +1,4 @@
-package jlinq.interfaces;
-
-import jlinq.queryable.IQueryable;
+package jlinq.queryable;
 
 /**
  * 

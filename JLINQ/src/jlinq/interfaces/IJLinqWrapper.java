@@ -69,12 +69,6 @@ public interface IJLinqWrapper<TSource> extends Iterable<TSource> {
 	public IParallelJLinqWrapper<TSource> asParallel(IParallelQueryOptions options) throws IllegalAccessException;
 
 	/**
-	 * @return Returns current collection in form of {@link IQueryable}.
-	 */
-	// public IQueryableJLinqWrapper<TSource> asQueryable(); // TODO: Think of a
-	// better idea.
-
-	/**
 	 * @param func
 	 * @return Casts each element from current collection using specified function.
 	 */
