@@ -5,6 +5,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import jlinq.functions.Function2;
+import jlinq.interfaces.IJLinqWrapper;
 
 /**
  * 
@@ -14,12 +15,12 @@ import jlinq.functions.Function2;
  *
  * @param <TSource>
  */
-public interface IQueryableJLinqWrapper<TSource> {
+public interface IQueryableJLinqWrapper<TSource> extends Iterable<TSource> {
 
 	/**
-	 * @return Executes current query and converts results to {@link IQueryable}.
+	 * @return Executes current query and converts results to {@link IJLinqWrapper}.
 	 */
-	public IQueryable<TSource> asIterable();
+	public IJLinqWrapper<TSource> asIterable();
 
 	/**
 	 * @return Executes current query and returns the average value from all returns

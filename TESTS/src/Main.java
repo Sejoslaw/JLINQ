@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutionException;
 import jlinq.JLinq;
 import jlinq.JLinqWrapper;
 import jlinq.parallel.DefaultParallelQueryOptions;
+import jlinq.queryable.InMemoryQueryableWrapper;
 
 /**
  * 
@@ -24,22 +25,31 @@ public class Main {
 
 		fillCustomers(customers);
 
+		System.out.println("---=== Testing Basic Operations ===---");
 		testBasicOperations(customers, x);
+		System.out.println("---=== Finished Testing Basic Operations ===---");
 
+		System.out.println("---=== Testing Parallel Operations ===---");
 		testParallelOperations(customers, x);
+		System.out.println("---=== Finished Testing Parallel Operations ===---");
 
-		// TODO: For future use.
+		System.out.println("---=== Testing Queryables ===---");
 		testQueryable(customers, x);
+		System.out.println("---=== Finished Testing Queryables ===---");
 
+		System.out.println("---=== Cheking Times For JLINQ and Streams API ===---");
 		checkTimes();
+		System.out.println("---=== Finished Cheking Times For JLINQ and Streams API ===---");
 
+		System.out.println("---=== Cheking Times For Parallel JLINQ and Streams API ===---");
 		checkTimesParallel();
+		System.out.println("---=== Finished Cheking Times For Parallel JLINQ and Streams API ===---");
 	}
 
-	private static void testQueryable(List<Customer> customers, List<Integer> x) {
+	private static void testQueryable(List<Customer> customers, List<Integer> x) throws IllegalAccessException {
 		// Where second parameter (null here) is an database Connection.
-//		new InMemoryQueryableWrapper<>(new JLinqWrapper<>(x), null).where(val -> val % 3 == 0)
-//				.forEach(val -> System.out.println(val));
+		new InMemoryQueryableWrapper<>(new JLinqWrapper<>(x)).where(val -> val % 200 == 0)
+				.forEach(val -> System.out.println(val));
 	}
 
 	private static void testParallelOperations(List<Customer> customers, List<Integer> x)
