@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import jlinq.JLinq;
@@ -88,6 +89,13 @@ public class Main {
 		// methods.
 		int wrapperCount = new JLinqWrapper<Customer>(customers).where((customer) -> customer.age == 24).count();
 		System.out.println(wrapperCount);
+
+		List<Integer> generatedNumbers = generateRandomNumbers(100);
+		// Ordered ascending
+		System.out.println("orderBy: " + new JLinqWrapper<Integer>(generatedNumbers).orderBy(val -> val).toList());
+		// Ordered descending
+		System.out.println("orderByDescending: "
+				+ new JLinqWrapper<Integer>(generatedNumbers).orderByDescending(val -> val).toList());
 
 		System.out.println(new JLinqWrapper<Customer>(new ArrayList<Customer>()).any());
 		System.out.println(new JLinqWrapper<Customer>(customers).any());
@@ -204,5 +212,13 @@ public class Main {
 		customers.add(new Customer("Dan", 36));
 		customers.add(new Customer("Mateusz", 25));
 		customers.add(new Customer("Ela", 24));
+	}
+
+	private static List<Integer> generateRandomNumbers(int n) {
+		List<Integer> list = new ArrayList<Integer>(n);
+		for (int i = 0; i < n; i++) {
+			list.add(new Random().nextInt(n * 10));
+		}
+		return list;
 	}
 }

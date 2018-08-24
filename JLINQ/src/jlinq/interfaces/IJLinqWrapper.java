@@ -178,6 +178,8 @@ public interface IJLinqWrapper<TSource> extends Iterable<TSource> {
 
 	// TODO: Add here GroupBy methods
 
+	// TODO: Implement groupJoin methods !!!
+
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> groupJoin(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, Iterable<TInner>, TResult> resultSelector);
@@ -199,6 +201,8 @@ public interface IJLinqWrapper<TSource> extends Iterable<TSource> {
 	 *         in the collection.
 	 */
 	public IJLinqWrapper<TSource> intersect(Iterable<TSource> second);
+
+	// TODO: Implement join methods !!!
 
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> join(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
@@ -245,7 +249,18 @@ public interface IJLinqWrapper<TSource> extends Iterable<TSource> {
 	 */
 	public long longCount(Predicate<TSource> predicate);
 
-	// TODO: Add here OrderBy and OrderByDescending methods
+	/**
+	 * @param keySelector
+	 * @return Returns ordered collection using specified key.
+	 */
+	public <TKey extends Comparable<TKey>> Iterable<TSource> orderBy(Function<TSource, TKey> keySelector);
+
+	/**
+	 * @param keySelector
+	 * @return Returns ordered collection using specified key. Returned collection
+	 *         will have a descending order.
+	 */
+	public <TKey extends Comparable<TKey>> Iterable<TSource> orderByDescending(Function<TSource, TKey> keySelector);
 
 	/**
 	 * @param start Start number from which the collection will be generated.

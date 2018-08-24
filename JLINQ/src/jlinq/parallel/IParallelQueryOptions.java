@@ -2,7 +2,7 @@ package jlinq.parallel;
 
 /**
  * 
- * Contains various options passed to parallel JLinq query. For default
+ * Contains various options passed to parallel JLINQ query. For default
  * implementation see: {@link DefaultParallelQueryOptions}.
  * 
  * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com

@@ -436,7 +436,55 @@ public final class JLinq {
 		return count;
 	}
 
-	// TODO: Add here OrderBy and OrderByDescending methods
+	public static <TSource, TKey extends Comparable<TKey>> Iterable<TSource> orderBy(Iterable<TSource> source,
+			Function<TSource, TKey> keySelector, boolean descending) {
+		if (source == null || keySelector == null) {
+			throw new IllegalArgumentException("Source collection or keySelector is null.");
+		}
+
+		int count = count(source);
+
+		if (count <= 1) {
+			return source;
+		}
+
+		List<TSource> sorted = new ArrayList<>();
+		List<TSource> lesser = new ArrayList<>();
+		List<TSource> greater = new ArrayList<>();
+
+		int middle = (int) Math.ceil((double) count / 2);
+		TSource pivot = elementAt(source, middle);
+		TKey pivotKey = keySelector.apply(pivot);
+
+		int index = 0;
+		for (TSource element : source) {
+			TKey elementKey = keySelector.apply(element);
+			if (elementKey.compareTo(pivotKey) <= 0) {
+				if (index == middle) {
+					continue;
+				}
+				lesser.add(element);
+			} else {
+				greater.add(element);
+			}
+			index++;
+		}
+
+		lesser = (List<TSource>) orderBy(lesser, keySelector, descending);
+		greater = (List<TSource>) orderBy(greater, keySelector, descending);
+
+		if (descending) {
+			greater.add(pivot);
+			greater.addAll(lesser);
+			sorted = greater;
+		} else {
+			lesser.add(pivot);
+			lesser.addAll(greater);
+			sorted = lesser;
+		}
+
+		return sorted;
+	}
 
 	public static Iterable<Integer> range(int start, int count) {
 		if (count < 0)

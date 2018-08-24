@@ -43,8 +43,8 @@ To be implemented LINQ methods:
 - [X] longCount
 - [X] max
 - [X] min
-- [ ] orderBy 
-- [ ] orderByDescending 
+- [X] orderBy 
+- [X] orderByDescending 
 - [X] range
 - [X] repeat
 - [X] replaceAt
