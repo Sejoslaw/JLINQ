@@ -72,6 +72,18 @@ public final class InMemoryQueryableWrapper<TSource> extends AbstractQueryableWr
 		return this;
 	}
 
+	public <TKey extends Comparable<TKey>> IQueryableJLinqWrapper<TSource> orderBy(
+			Function<TSource, TKey> keySelector) {
+		this.source = this.source.orderBy(keySelector);
+		return this;
+	}
+
+	public <TKey extends Comparable<TKey>> IQueryableJLinqWrapper<TSource> orderByDescending(
+			Function<TSource, TKey> keySelector) {
+		this.source = this.source.orderByDescending(keySelector);
+		return this;
+	}
+
 	public <TResult> IQueryableJLinqWrapper<TResult> select(Function<TSource, TResult> selector) {
 		return new InMemoryQueryableWrapper<>(this.source.select(selector));
 	}

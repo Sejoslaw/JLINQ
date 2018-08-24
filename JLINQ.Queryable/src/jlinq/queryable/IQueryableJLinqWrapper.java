@@ -67,7 +67,19 @@ public interface IQueryableJLinqWrapper<TSource> extends Iterable<TSource> {
 	 */
 	public IQueryableJLinqWrapper<TSource> offset(int count);
 
-	// TODO: Add here OrderBy and OrderByDescending methods
+	/**
+	 * @param keySelector
+	 * @return Returns ordered collection using specified key.
+	 */
+	public <TKey extends Comparable<TKey>> IQueryableJLinqWrapper<TSource> orderBy(Function<TSource, TKey> keySelector);
+
+	/**
+	 * @param keySelector
+	 * @return Returns ordered collection using specified key. Returned collection
+	 *         will have a descending order.
+	 */
+	public <TKey extends Comparable<TKey>> IQueryableJLinqWrapper<TSource> orderByDescending(
+			Function<TSource, TKey> keySelector);
 
 	/**
 	 * @param selector

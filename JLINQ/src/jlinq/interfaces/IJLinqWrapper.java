@@ -253,14 +253,15 @@ public interface IJLinqWrapper<TSource> extends Iterable<TSource> {
 	 * @param keySelector
 	 * @return Returns ordered collection using specified key.
 	 */
-	public <TKey extends Comparable<TKey>> Iterable<TSource> orderBy(Function<TSource, TKey> keySelector);
+	public <TKey extends Comparable<TKey>> IJLinqWrapper<TSource> orderBy(Function<TSource, TKey> keySelector);
 
 	/**
 	 * @param keySelector
 	 * @return Returns ordered collection using specified key. Returned collection
 	 *         will have a descending order.
 	 */
-	public <TKey extends Comparable<TKey>> Iterable<TSource> orderByDescending(Function<TSource, TKey> keySelector);
+	public <TKey extends Comparable<TKey>> IJLinqWrapper<TSource> orderByDescending(
+			Function<TSource, TKey> keySelector);
 
 	/**
 	 * @param start Start number from which the collection will be generated.
