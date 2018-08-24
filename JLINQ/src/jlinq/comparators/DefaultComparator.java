@@ -11,6 +11,10 @@ import java.util.Comparator;
 public class DefaultComparator<TSource> implements Comparator<TSource> {
 
 	public int compare(TSource o1, TSource o2) {
+		if (o1 instanceof Comparable<?>) {
+			return ((Comparable<TSource>) o1).compareTo(o2);
+		}
+
 		int hash1 = o1.hashCode();
 		int hash2 = o2.hashCode();
 

@@ -60,8 +60,11 @@ To be implemented LINQ methods:
 - [X] sum
 - [X] take
 - [X] takeWhile
+- [ ] thenBy
+- [ ] thenByDescending
 - [X] toArray
 - [X] toList
+- [ ] toLookup
 - [X] toMap
 - [X] toSet
 - [X] union

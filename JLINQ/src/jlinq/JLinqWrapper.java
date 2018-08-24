@@ -214,13 +214,21 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 		return JLinq.longCount(this.iterable, predicate);
 	}
 
-	public <TKey extends Comparable<TKey>> IJLinqWrapper<TSource> orderBy(Function<TSource, TKey> keySelector) {
-		return new JLinqWrapper<>(JLinq.orderBy(this.iterable, keySelector, false));
+	public <TKey> IJLinqWrapper<TSource> orderBy(Function<TSource, TKey> keySelector) {
+		return new JLinqWrapper<>(JLinq.orderBy(this.iterable, keySelector, false, null));
 	}
 
-	public <TKey extends Comparable<TKey>> IJLinqWrapper<TSource> orderByDescending(
-			Function<TSource, TKey> keySelector) {
-		return new JLinqWrapper<>(JLinq.orderBy(this.iterable, keySelector, true));
+	public <TKey> IJLinqWrapper<TSource> orderBy(Function<TSource, TKey> keySelector, Comparator<TKey> comparer) {
+		return new JLinqWrapper<>(JLinq.orderBy(this.iterable, keySelector, false, comparer));
+	}
+
+	public <TKey> IJLinqWrapper<TSource> orderByDescending(Function<TSource, TKey> keySelector) {
+		return new JLinqWrapper<>(JLinq.orderBy(this.iterable, keySelector, true, null));
+	}
+
+	public <TKey> IJLinqWrapper<TSource> orderByDescending(Function<TSource, TKey> keySelector,
+			Comparator<TKey> comparer) {
+		return new JLinqWrapper<>(JLinq.orderBy(this.iterable, keySelector, true, comparer));
 	}
 
 	public IJLinqWrapper<Integer> range(int start, int count) {

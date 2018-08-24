@@ -436,10 +436,13 @@ public final class JLinq {
 		return count;
 	}
 
-	public static <TSource, TKey extends Comparable<TKey>> Iterable<TSource> orderBy(Iterable<TSource> source,
-			Function<TSource, TKey> keySelector, boolean descending) {
+	public static <TSource, TKey> Iterable<TSource> orderBy(Iterable<TSource> source,
+			Function<TSource, TKey> keySelector, boolean descending, Comparator<TKey> comparator) {
 		if (source == null || keySelector == null) {
 			throw new IllegalArgumentException("Source collection or keySelector is null.");
+		}
+		if (comparator == null) {
+			comparator = new DefaultComparator<>();
 		}
 
 		int count = count(source);
@@ -459,7 +462,7 @@ public final class JLinq {
 		int index = 0;
 		for (TSource element : source) {
 			TKey elementKey = keySelector.apply(element);
-			if (elementKey.compareTo(pivotKey) <= 0) {
+			if (comparator.compare(elementKey, pivotKey) <= 0) {
 				if (index == middle) {
 					continue;
 				}
@@ -470,8 +473,8 @@ public final class JLinq {
 			index++;
 		}
 
-		lesser = (List<TSource>) orderBy(lesser, keySelector, descending);
-		greater = (List<TSource>) orderBy(greater, keySelector, descending);
+		lesser = (List<TSource>) orderBy(lesser, keySelector, descending, comparator);
+		greater = (List<TSource>) orderBy(greater, keySelector, descending, comparator);
 
 		if (descending) {
 			greater.add(pivot);
