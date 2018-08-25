@@ -37,7 +37,7 @@ To be implemented LINQ methods:
 - [ ] groupJoin
 - [X] indexOf
 - [X] intersect
-- [ ] join
+- [X] join
 - [X] last
 - [X] lastOrDefault
 - [X] longCount
