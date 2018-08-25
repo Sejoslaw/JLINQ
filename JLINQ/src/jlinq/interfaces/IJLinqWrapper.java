@@ -218,12 +218,28 @@ public interface IJLinqWrapper<TSource> extends Iterable<TSource> {
 	 */
 	public IJLinqWrapper<TSource> intersect(Iterable<TSource> second);
 
-	// TODO: Implement join methods !!!
-
+	/**
+	 * @param inner            Collection which will be joined with current
+	 *                         collection.
+	 * @param outerKeySelector Selects key from current collection.
+	 * @param innerKeySelector Selects key from inner collection.
+	 * @param resultSelector   Returns a result of joining outer and inner element.
+	 * @return Returns a collection which is build of an object-pair results.
+	 */
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> join(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, TInner, TResult> resultSelector);
 
+	/**
+	 * @param inner            Collection which will be joined with current
+	 *                         collection.
+	 * @param outerKeySelector Selects key from current collection.
+	 * @param innerKeySelector Selects key from inner collection.
+	 * @param resultSelector   Returns a result of joining outer and inner element.
+	 * @param comparator       Comparator used to compare keys from current and
+	 *                         inner collections.
+	 * @return Returns a collection which is build of an object-pair results.
+	 */
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> join(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, TInner, TResult> resultSelector, Comparator<TKey> comparator);

@@ -366,13 +366,30 @@ public final class JLinq {
 	public static <TOuter, TInner, TKey, TResult> Iterable<TResult> join(Iterable<TOuter> outer, Iterable<TInner> inner,
 			Function<TOuter, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TOuter, TInner, TResult> resultSelector) {
-		throw new UnsupportedOperationException();
+		return join(outer, inner, outerKeySelector, innerKeySelector, resultSelector, null);
 	}
 
 	public static <TOuter, TInner, TKey, TResult> Iterable<TResult> join(Iterable<TOuter> outer, Iterable<TInner> inner,
 			Function<TOuter, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TOuter, TInner, TResult> resultSelector, Comparator<TKey> comparator) {
-		throw new UnsupportedOperationException();
+		if (comparator == null) {
+			comparator = new DefaultComparator<>();
+		}
+
+		List<TResult> results = new ArrayList<>();
+
+		for (TOuter outerElement : outer) {
+			TKey keyOuter = outerKeySelector.apply(outerElement);
+			for (TInner innerElement : inner) {
+				TKey keyInner = innerKeySelector.apply(innerElement);
+				if (comparator.compare(keyOuter, keyInner) == 0) {
+					TResult result = resultSelector.apply(outerElement, innerElement);
+					results.add(result);
+				}
+			}
+		}
+
+		return results;
 	}
 
 	public static <TSource> TSource last(Iterable<TSource> source) {

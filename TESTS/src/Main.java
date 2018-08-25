@@ -101,6 +101,14 @@ public class Main {
 			System.out.println("Group Key = " + group.getKey().intValue() + ", count = " + JLinq.count(group));
 		});
 
+		new JLinqWrapper<Customer>(customers)
+				.join(x, customer -> customer.age, val -> val, (outer, inner) -> outer + " == " + inner.intValue())
+				.forEach(val -> System.out.println(val));
+
+		new JLinqWrapper<Integer>(x).replaceMultiple(24, val -> val % 100 == 0).join(customers, val -> val,
+				customer -> customer.age, (outer, inner) -> inner + " == " + outer.intValue())
+				.forEach(val -> System.out.println(val));
+
 		System.out.println(new JLinqWrapper<Customer>(new ArrayList<Customer>()).any());
 		System.out.println(new JLinqWrapper<Customer>(customers).any());
 		System.out.println(new JLinqWrapper<Customer>(customers).elementAt(5).name);
