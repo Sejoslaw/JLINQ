@@ -5,6 +5,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import jlinq.functions.Function2;
+import jlinq.grouping.IGroup;
 import jlinq.interfaces.IJLinqWrapper;
 
 /**
@@ -39,12 +40,45 @@ public interface IQueryableJLinqWrapper<TSource> extends Iterable<TSource> {
 	 */
 	public IQueryableJLinqWrapper<TSource> distinct();
 
-	// TODO: Add here GroupBy methods
+	/**
+	 * @param keySelector     Specified key for each element.
+	 * @param elementSelector Element which will be added to right group.
+	 * @return Returns collection of grouped elements.
+	 */
+	public <TKey, TElement> IQueryableJLinqWrapper<IGroup<TKey, TElement>> groupBy(Function<TSource, TKey> keySelector,
+			Function<TSource, TElement> elementSelector);
 
+	/**
+	 * @param keySelector     Specified key for each element.
+	 * @param elementSelector Element which will be added to right group.
+	 * @param comparator
+	 * @return Returns collection of grouped elements.
+	 */
+	public <TKey, TElement> IQueryableJLinqWrapper<IGroup<TKey, TElement>> groupBy(Function<TSource, TKey> keySelector,
+			Function<TSource, TElement> elementSelector, Comparator<TKey> comparator);
+
+	/**
+	 * @param inner            Collection which will be joined with current
+	 *                         collection.
+	 * @param outerKeySelector Selects key from current collection.
+	 * @param innerKeySelector Selects key from inner collection.
+	 * @param resultSelector   Returns a result of joining outer and inner element.
+	 * @return Returns a collection which is build of an object-pair results.
+	 */
 	public <TInner, TKey, TResult> IQueryableJLinqWrapper<TResult> join(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, TInner, TResult> resultSelector);
 
+	/**
+	 * @param inner            Collection which will be joined with current
+	 *                         collection.
+	 * @param outerKeySelector Selects key from current collection.
+	 * @param innerKeySelector Selects key from inner collection.
+	 * @param resultSelector   Returns a result of joining outer and inner element.
+	 * @param comparator       Comparator used to compare keys from current and
+	 *                         inner collections.
+	 * @return Returns a collection which is build of an object-pair results.
+	 */
 	public <TInner, TKey, TResult> IQueryableJLinqWrapper<TResult> join(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, TInner, TResult> resultSelector, Comparator<TKey> comparator);

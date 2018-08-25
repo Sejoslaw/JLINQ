@@ -10,7 +10,7 @@ public final class JLinqQueryable {
 	/**
 	 * Version of the current build.
 	 */
-	public static final String VERSION = "0.4.0";
+	public static final String VERSION = "0.4.1";
 
 	private JLinqQueryable() {
 	}

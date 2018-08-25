@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import jlinq.functions.Function2;
+import jlinq.grouping.IGroup;
 import jlinq.interfaces.IJLinqWrapper;
 
 /**
@@ -43,6 +44,16 @@ public final class InMemoryQueryableWrapper<TSource> extends AbstractQueryableWr
 	public IQueryableJLinqWrapper<TSource> distinct() {
 		this.source = this.source.distinct();
 		return this;
+	}
+
+	public <TKey, TElement> IQueryableJLinqWrapper<IGroup<TKey, TElement>> groupBy(Function<TSource, TKey> keySelector,
+			Function<TSource, TElement> elementSelector) {
+		return new InMemoryQueryableWrapper<>(this.source.groupBy(keySelector, elementSelector));
+	}
+
+	public <TKey, TElement> IQueryableJLinqWrapper<IGroup<TKey, TElement>> groupBy(Function<TSource, TKey> keySelector,
+			Function<TSource, TElement> elementSelector, Comparator<TKey> comparator) {
+		return new InMemoryQueryableWrapper<>(this.source.groupBy(keySelector, elementSelector, comparator));
 	}
 
 	public <TInner, TKey, TResult> IQueryableJLinqWrapper<TResult> join(Iterable<TInner> inner,
