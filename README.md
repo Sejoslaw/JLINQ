@@ -33,7 +33,7 @@ To be implemented LINQ methods:
 - [X] first
 - [X] firstOrDefault
 - [X] forEach
-- [ ] groupBy 
+- [X] groupBy 
 - [ ] groupJoin
 - [X] indexOf
 - [X] intersect

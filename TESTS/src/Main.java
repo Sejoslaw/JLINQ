@@ -97,6 +97,10 @@ public class Main {
 		System.out.println("orderByDescending: "
 				+ new JLinqWrapper<Integer>(generatedNumbers).orderByDescending(val -> val).toList());
 
+		new JLinqWrapper<Customer>(customers).groupBy(val -> val.age, val -> val).forEach(group -> {
+			System.out.println("Group Key = " + group.getKey().intValue() + ", count = " + JLinq.count(group));
+		});
+
 		System.out.println(new JLinqWrapper<Customer>(new ArrayList<Customer>()).any());
 		System.out.println(new JLinqWrapper<Customer>(customers).any());
 		System.out.println(new JLinqWrapper<Customer>(customers).elementAt(5).name);

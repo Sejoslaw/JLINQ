@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import jlinq.functions.Function2;
+import jlinq.grouping.IGroup;
 import jlinq.interfaces.IJLinqWrapper;
 import jlinq.interfaces.INumberJLinqWrapper;
 import jlinq.interfaces.IParallelJLinqWrapper;
@@ -149,7 +150,15 @@ public class JLinqWrapper<TSource> implements IJLinqWrapper<TSource> {
 		return JLinq.firstOrDefault(this.iterable, predicate);
 	}
 
-	// TODO: Add here GroupBy methods
+	public <TKey, TElement> IJLinqWrapper<IGroup<TKey, TElement>> groupBy(Function<TSource, TKey> keySelector,
+			Function<TSource, TElement> elementSelector) {
+		return new JLinqWrapper<>(JLinq.groupBy(this.iterable, keySelector, elementSelector));
+	}
+
+	public <TKey, TElement> IJLinqWrapper<IGroup<TKey, TElement>> groupBy(Function<TSource, TKey> keySelector,
+			Function<TSource, TElement> elementSelector, Comparator<TKey> comparator) {
+		return new JLinqWrapper<>(JLinq.groupBy(this.iterable, keySelector, elementSelector, comparator));
+	}
 
 	public <TInner, TKey, TResult> IJLinqWrapper<TResult> groupJoin(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,

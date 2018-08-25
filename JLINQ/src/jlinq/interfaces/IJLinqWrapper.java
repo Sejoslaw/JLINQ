@@ -8,6 +8,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import jlinq.functions.Function2;
+import jlinq.grouping.IGroup;
 import jlinq.parallel.IParallelQueryOptions;
 
 /**
@@ -176,7 +177,22 @@ public interface IJLinqWrapper<TSource> extends Iterable<TSource> {
 	 */
 	public TSource firstOrDefault(Predicate<TSource> predicate);
 
-	// TODO: Add here GroupBy methods
+	/**
+	 * @param keySelector     Specified key for each element.
+	 * @param elementSelector Element which will be added to right group.
+	 * @return Returns collection of grouped elements.
+	 */
+	public <TKey, TElement> IJLinqWrapper<IGroup<TKey, TElement>> groupBy(Function<TSource, TKey> keySelector,
+			Function<TSource, TElement> elementSelector);
+
+	/**
+	 * @param keySelector     Specified key for each element.
+	 * @param elementSelector Element which will be added to right group.
+	 * @param comparator
+	 * @return Returns collection of grouped elements.
+	 */
+	public <TKey, TElement> IJLinqWrapper<IGroup<TKey, TElement>> groupBy(Function<TSource, TKey> keySelector,
+			Function<TSource, TElement> elementSelector, Comparator<TKey> comparator);
 
 	// TODO: Implement groupJoin methods !!!
 

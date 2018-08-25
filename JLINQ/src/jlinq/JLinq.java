@@ -14,6 +14,8 @@ import java.util.function.Predicate;
 
 import jlinq.comparators.DefaultComparator;
 import jlinq.functions.Function2;
+import jlinq.grouping.DefaultGroup;
+import jlinq.grouping.IGroup;
 
 /**
  * Main entry point of JLINQ library. JLINQ operates on {@link Iterable} level
@@ -288,7 +290,41 @@ public final class JLinq {
 		}
 	}
 
-	// TODO: Add here GroupBy methods
+	public static <TSource, TKey, TElement> Iterable<IGroup<TKey, TElement>> groupBy(Iterable<TSource> source,
+			Function<TSource, TKey> keySelector, Function<TSource, TElement> elementSelector) {
+		return groupBy(source, keySelector, elementSelector, null);
+	}
+
+	public static <TSource, TKey, TElement> Iterable<IGroup<TKey, TElement>> groupBy(Iterable<TSource> source,
+			Function<TSource, TKey> keySelector, Function<TSource, TElement> elementSelector,
+			Comparator<TKey> comparator) {
+		if (comparator == null) {
+			comparator = new DefaultComparator<>();
+		}
+
+		List<IGroup<TKey, TElement>> groups = new ArrayList<>();
+		boolean groupFound = false; // For single memory allocation;
+
+		for (TSource sourceElement : source) {
+			TKey sourceElementKey = keySelector.apply(sourceElement);
+			groupFound = false;
+			TElement element = elementSelector.apply(sourceElement);
+			for (IGroup<TKey, TElement> group : groups) {
+				if (comparator.compare(group.getKey(), sourceElementKey) == 0) {
+					((DefaultGroup<TKey, TElement>) group).add(element);
+					groupFound = true;
+					break;
+				}
+			}
+			if (!groupFound) {
+				DefaultGroup<TKey, TElement> newGroup = new DefaultGroup<>(sourceElementKey);
+				newGroup.add(element);
+				groups.add(newGroup);
+			}
+		}
+
+		return groups;
+	}
 
 	public static <TOuter, TInner, TKey, TResult> Iterable<TResult> groupJoin(Iterable<TOuter> outer,
 			Iterable<TInner> inner, Function<TOuter, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
@@ -441,6 +477,7 @@ public final class JLinq {
 		if (source == null || keySelector == null) {
 			throw new IllegalArgumentException("Source collection or keySelector is null.");
 		}
+
 		if (comparator == null) {
 			comparator = new DefaultComparator<>();
 		}
