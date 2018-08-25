@@ -15,6 +15,11 @@ public class DefaultComparator<TSource> implements Comparator<TSource> {
 			return ((Comparable<TSource>) o1).compareTo(o2);
 		}
 
+		// Make sure to check if the objects are equal by default.
+		if (o1 == o2) {
+			return 0;
+		}
+
 		int hash1 = o1.hashCode();
 		int hash2 = o2.hashCode();
 
