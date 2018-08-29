@@ -32,7 +32,7 @@ public final class JLinq {
 	/**
 	 * Version of the current build.
 	 */
-	public static final String VERSION = "0.4.0";
+	public static final String VERSION = "0.5.0";
 
 	private JLinq() {
 	}

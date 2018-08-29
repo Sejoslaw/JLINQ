@@ -4,7 +4,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/JLINQ"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/JLINQ.Queryable"/>
-	<classpathentry kind="lib" path="C:/Dev/JLINQ/TESTS_Queryable/lib/mysql-connector.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/JLINQ.Queryable.MySQL"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

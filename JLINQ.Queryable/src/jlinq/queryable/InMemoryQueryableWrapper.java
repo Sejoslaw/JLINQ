@@ -1,4 +1,4 @@
-package jlinq.queryable.memory;
+package jlinq.queryable;
 
 import java.util.Iterator;
 import java.util.function.Function;
@@ -7,8 +7,6 @@ import java.util.function.Predicate;
 import jlinq.functions.Function2;
 import jlinq.grouping.IGroup;
 import jlinq.interfaces.IJLinqWrapper;
-import jlinq.queryable.AbstractQueryableWrapper;
-import jlinq.queryable.IQueryableJLinqWrapper;
 
 /**
  * 
@@ -26,7 +24,7 @@ public final class InMemoryQueryableWrapper<TSource> extends AbstractQueryableWr
 	private IJLinqWrapper<TSource> source;
 
 	public InMemoryQueryableWrapper(IJLinqWrapper<TSource> source) {
-		super(null, null);
+		super(null, null, null);
 		this.source = source;
 	}
 

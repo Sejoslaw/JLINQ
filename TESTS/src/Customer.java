@@ -12,6 +12,6 @@ public class Customer {
 	}
 
 	public String toString() {
-		return "Customer[" + "Id=" + this.id + ",Name=" + this.name + ",Age=" + this.age + "]";
+		return "Customer[Id=" + this.id + ",Name=" + this.name + ",Age=" + this.age + "]";
 	}
 }
