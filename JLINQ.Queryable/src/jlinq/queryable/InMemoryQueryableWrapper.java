@@ -16,7 +16,7 @@ import jlinq.interfaces.IJLinqWrapper;
  *
  * @param <TSource>
  */
-public final class InMemoryQueryableWrapper<TSource> extends AbstractQueryableWrapper<TSource> {
+public final class InMemoryQueryableWrapper<TSource> extends AbstractQueryableJLinqWrapper<TSource> {
 
 	/**
 	 * Source collection on which all the methods will be executed.

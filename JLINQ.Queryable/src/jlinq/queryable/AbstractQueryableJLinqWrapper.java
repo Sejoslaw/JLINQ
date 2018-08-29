@@ -23,7 +23,7 @@ import jlinq.interfaces.IJLinqWrapper;
  * @param <TSource> Model type which should have fields named the same as the
  *        names of the database columns.
  */
-public abstract class AbstractQueryableWrapper<TSource> implements IQueryableJLinqWrapper<TSource> {
+public abstract class AbstractQueryableJLinqWrapper<TSource> implements IQueryableJLinqWrapper<TSource> {
 
 	/**
 	 * Class of the currently used model.
@@ -50,11 +50,11 @@ public abstract class AbstractQueryableWrapper<TSource> implements IQueryableJLi
 	 */
 	protected String query;
 
-	public AbstractQueryableWrapper(Class<TSource> modelClass, Connection connection) {
+	public AbstractQueryableJLinqWrapper(Class<TSource> modelClass, Connection connection) {
 		this(modelClass, connection, modelClass.getName());
 	}
 
-	public AbstractQueryableWrapper(Class<TSource> modelClass, Connection connection, String tableName) {
+	public AbstractQueryableJLinqWrapper(Class<TSource> modelClass, Connection connection, String tableName) {
 		this.modelClass = modelClass;
 		this.connection = connection;
 		this.tableName = tableName;
