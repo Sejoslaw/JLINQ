@@ -6,7 +6,6 @@ import java.util.function.Predicate;
 
 import jlinq.functions.Function2;
 import jlinq.grouping.IGroup;
-import jlinq.interfaces.IJLinqWrapper;
 import jlinq.queryable.AbstractQueryableWrapper;
 import jlinq.queryable.IQueryableJLinqWrapper;
 
@@ -35,21 +34,9 @@ public class MySqlQueryableJLinqWrapper<TSource> extends AbstractQueryableWrappe
 	}
 
 	@Override
-	public IJLinqWrapper<TSource> asIterable() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public TSource average() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public int count() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override

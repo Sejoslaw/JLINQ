@@ -5,6 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
+import java.util.List;
+
+import jlinq.JLinq;
+import jlinq.JLinqWrapper;
+import jlinq.interfaces.IJLinqWrapper;
 
 /**
  * 
@@ -57,6 +62,15 @@ public abstract class AbstractQueryableWrapper<TSource> implements IQueryableJLi
 		// Handle iterating over query result.
 		IExecuteQuery executer = () -> this.executeQuery();
 		this.iterator = new QueryableIterator<>(this.modelClass, executer);
+	}
+
+	public IJLinqWrapper<TSource> asIterable() {
+		List<TSource> source = JLinq.toList(this); // Force query to execute.
+		return new JLinqWrapper<>(source);
+	}
+
+	public int count() {
+		return JLinq.count(this);
 	}
 
 	public Iterator<TSource> iterator() {

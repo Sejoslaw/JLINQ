@@ -56,11 +56,12 @@ public class Main {
 		// New queryable for MySQL with the given table name as second parameter
 		System.out.println("Test with table name specified:");
 		IQueryableJLinqWrapper<Customer> mySqlQuery = new MySqlQueryableJLinqWrapper<>(Customer.class, xamppConnection, "mycustomers");
-		mySqlQuery.forEach(customer -> System.out.println(customer));
-		
+		mySqlQuery.where(customer -> customer.Age > 20).forEach(customer -> System.out.println(customer));
+
 		System.out.println();
-		
-		// Similar to above but in this case the query wrapper will parse table name from the generic argument class name.
+
+		// Similar to above but in this case the query wrapper will parse table name
+		// from the generic argument class name.
 		System.out.println("Test without table name specified:");
 		mySqlQuery = new MySqlQueryableJLinqWrapper<>(Customer.class, xamppConnection);
 		mySqlQuery.forEach(customer -> System.out.println(customer));
