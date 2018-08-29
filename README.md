@@ -10,6 +10,7 @@ Projects:
 | -----|-------------|
 | [JLINQ](https://github.com/Sejoslaw/JLINQ/tree/master/JLINQ/src/jlinq) | Contains core interfaces and default implementation for JLINQ queries. [Examples.](https://github.com/Sejoslaw/JLINQ/blob/master/TESTS/src/Main.java) |
 | [W.I.P.] [JLINQ.Queryable](https://github.com/Sejoslaw/JLINQ/tree/master/JLINQ.Queryable/src/jlinq/queryable) | Contains core interfaces for executing JLINQ queries on data sources. |
+| [W.I.P.] [JLINQ.Queryable.MySQL](https://github.com/Sejoslaw/JLINQ/tree/master/JLINQ.Queryable.MySQL/src/jlinq/queryable/mysql) | Contains query wrapper for MySQL database ([MySqlQueryableJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ.Queryable.MySQL/src/jlinq/queryable/mysql/MySqlQueryableJLinqWrapper.java)). |
 
 To be implemented LINQ methods:
 ---
