@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 import jlinq.JLinq;
 import jlinq.JLinqWrapper;
 import jlinq.parallel.DefaultParallelQueryOptions;
-import jlinq.queryable.InMemoryQueryableWrapper;
+import jlinq.queryable.memory.InMemoryQueryableWrapper;
 
 /**
  * 

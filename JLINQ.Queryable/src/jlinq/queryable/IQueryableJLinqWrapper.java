@@ -1,6 +1,5 @@
 package jlinq.queryable;
 
-import java.util.Comparator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -24,8 +23,8 @@ public interface IQueryableJLinqWrapper<TSource> extends Iterable<TSource> {
 	public IJLinqWrapper<TSource> asIterable();
 
 	/**
-	 * @return Executes current query and returns the average value from all returns
-	 *         values.
+	 * @return Executes current query and returns the average value from all
+	 *         returned values.
 	 */
 	public TSource average();
 
@@ -49,15 +48,6 @@ public interface IQueryableJLinqWrapper<TSource> extends Iterable<TSource> {
 			Function<TSource, TElement> elementSelector);
 
 	/**
-	 * @param keySelector     Specified key for each element.
-	 * @param elementSelector Element which will be added to right group.
-	 * @param comparator
-	 * @return Returns collection of grouped elements.
-	 */
-	public <TKey, TElement> IQueryableJLinqWrapper<IGroup<TKey, TElement>> groupBy(Function<TSource, TKey> keySelector,
-			Function<TSource, TElement> elementSelector, Comparator<TKey> comparator);
-
-	/**
 	 * @param inner            Collection which will be joined with current
 	 *                         collection.
 	 * @param outerKeySelector Selects key from current collection.
@@ -68,20 +58,6 @@ public interface IQueryableJLinqWrapper<TSource> extends Iterable<TSource> {
 	public <TInner, TKey, TResult> IQueryableJLinqWrapper<TResult> join(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, TInner, TResult> resultSelector);
-
-	/**
-	 * @param inner            Collection which will be joined with current
-	 *                         collection.
-	 * @param outerKeySelector Selects key from current collection.
-	 * @param innerKeySelector Selects key from inner collection.
-	 * @param resultSelector   Returns a result of joining outer and inner element.
-	 * @param comparator       Comparator used to compare keys from current and
-	 *                         inner collections.
-	 * @return Returns a collection which is build of an object-pair results.
-	 */
-	public <TInner, TKey, TResult> IQueryableJLinqWrapper<TResult> join(Iterable<TInner> inner,
-			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
-			Function2<TSource, TInner, TResult> resultSelector, Comparator<TKey> comparator);
 
 	/**
 	 * @return Executes current query and returns the maximum value from query
@@ -124,14 +100,12 @@ public interface IQueryableJLinqWrapper<TSource> extends Iterable<TSource> {
 	/**
 	 * @param second
 	 * @return Adds union query to current query tree.
-	 * @throws IllegalAccessException
 	 */
-	public IQueryableJLinqWrapper<TSource> union(Iterable<TSource> second) throws IllegalAccessException;
+	public IQueryableJLinqWrapper<TSource> union(Iterable<TSource> second);
 
 	/**
 	 * @param predicate
 	 * @return Adds where query to current query tree.
-	 * @throws IllegalAccessException
 	 */
-	public IQueryableJLinqWrapper<TSource> where(Predicate<TSource> predicate) throws IllegalAccessException;
+	public IQueryableJLinqWrapper<TSource> where(Predicate<TSource> predicate);
 }

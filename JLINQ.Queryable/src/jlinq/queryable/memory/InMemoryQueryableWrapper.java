@@ -1,6 +1,5 @@
-package jlinq.queryable;
+package jlinq.queryable.memory;
 
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -8,6 +7,8 @@ import java.util.function.Predicate;
 import jlinq.functions.Function2;
 import jlinq.grouping.IGroup;
 import jlinq.interfaces.IJLinqWrapper;
+import jlinq.queryable.AbstractQueryableWrapper;
+import jlinq.queryable.IQueryableJLinqWrapper;
 
 /**
  * 
@@ -25,7 +26,7 @@ public final class InMemoryQueryableWrapper<TSource> extends AbstractQueryableWr
 	private IJLinqWrapper<TSource> source;
 
 	public InMemoryQueryableWrapper(IJLinqWrapper<TSource> source) {
-		super(null);
+		super(null, null);
 		this.source = source;
 	}
 
@@ -51,23 +52,11 @@ public final class InMemoryQueryableWrapper<TSource> extends AbstractQueryableWr
 		return new InMemoryQueryableWrapper<>(this.source.groupBy(keySelector, elementSelector));
 	}
 
-	public <TKey, TElement> IQueryableJLinqWrapper<IGroup<TKey, TElement>> groupBy(Function<TSource, TKey> keySelector,
-			Function<TSource, TElement> elementSelector, Comparator<TKey> comparator) {
-		return new InMemoryQueryableWrapper<>(this.source.groupBy(keySelector, elementSelector, comparator));
-	}
-
 	public <TInner, TKey, TResult> IQueryableJLinqWrapper<TResult> join(Iterable<TInner> inner,
 			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
 			Function2<TSource, TInner, TResult> resultSelector) {
 		return new InMemoryQueryableWrapper<>(
 				this.source.join(inner, outerKeySelector, innerKeySelector, resultSelector));
-	}
-
-	public <TInner, TKey, TResult> IQueryableJLinqWrapper<TResult> join(Iterable<TInner> inner,
-			Function<TSource, TKey> outerKeySelector, Function<TInner, TKey> innerKeySelector,
-			Function2<TSource, TInner, TResult> resultSelector, Comparator<TKey> comparator) {
-		return new InMemoryQueryableWrapper<>(
-				this.source.join(inner, outerKeySelector, innerKeySelector, resultSelector, comparator));
 	}
 
 	public TSource max() {
@@ -99,14 +88,24 @@ public final class InMemoryQueryableWrapper<TSource> extends AbstractQueryableWr
 		return new InMemoryQueryableWrapper<>(this.source.select(selector));
 	}
 
-	public IQueryableJLinqWrapper<TSource> union(Iterable<TSource> second) throws IllegalAccessException {
-		this.source = this.source.union(second);
-		return this;
+	public IQueryableJLinqWrapper<TSource> union(Iterable<TSource> second) {
+		try {
+			this.source = this.source.union(second);
+			return this;
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
-	public IQueryableJLinqWrapper<TSource> where(Predicate<TSource> predicate) throws IllegalAccessException {
-		this.source = this.source.where(predicate);
-		return this;
+	public IQueryableJLinqWrapper<TSource> where(Predicate<TSource> predicate) {
+		try {
+			this.source = this.source.where(predicate);
+			return this;
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public Iterator<TSource> iterator() {
