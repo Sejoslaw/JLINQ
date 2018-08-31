@@ -75,6 +75,14 @@ public abstract class AbstractQueryableJLinqWrapper<TSource> implements IQueryab
 		return JLinq.count(this);
 	}
 
+	/**
+	 * @return Returns the current query which will be executed on specified data
+	 *         source.
+	 */
+	public String getQuery() {
+		return this.query;
+	}
+
 	public Iterator<TSource> iterator() {
 		return this.iterator;
 	}

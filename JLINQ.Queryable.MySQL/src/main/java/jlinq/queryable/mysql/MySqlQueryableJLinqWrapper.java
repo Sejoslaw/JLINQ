@@ -6,19 +6,19 @@ import java.util.function.Predicate;
 
 import jlinq.functions.Function2;
 import jlinq.grouping.IGroup;
-import jlinq.queryable.AbstractQueryableJLinqWrapper;
 import jlinq.queryable.interfaces.IQueryableJLinqWrapper;
+import jlinq.queryable.sql.SqlQueryableJLinqWrapper;
 
 /**
  * 
  * Wrapper for MySQL database. For more details informations see:
- * {@link AbstractQueryableJLinqWrapper}.
+ * {@link SqlQueryableJLinqWrapper}.
  * 
  * @author Krzysztof Dobrzynski - k.dobrzynski94@gmail.com
  *
  * @param <TSource>
  */
-public class MySqlQueryableJLinqWrapper<TSource> extends AbstractQueryableJLinqWrapper<TSource> {
+public class MySqlQueryableJLinqWrapper<TSource> extends SqlQueryableJLinqWrapper<TSource> {
 
 	/**
 	 * Version of the current build.

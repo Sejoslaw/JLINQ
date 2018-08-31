@@ -3,7 +3,6 @@ import java.sql.DriverManager;
 
 import org.junit.Test;
 
-import jlinq.queryable.JLinqQueryable;
 import jlinq.queryable.interfaces.IQueryableJLinqWrapper;
 import jlinq.queryable.mysql.MySqlQueryableJLinqWrapper;
 
@@ -15,13 +14,11 @@ import jlinq.queryable.mysql.MySqlQueryableJLinqWrapper;
 public class Main {
 	
 	public Main() {
-		System.out.println("Testing JLINQ.Queryable version: " + JLinqQueryable.VERSION);
-		System.out.println();
 	}
 	
 	@Test
 	public void testMySQLQueries() {
-		System.out.println("---=== Testing MySQL Queries (version: " + MySqlQueryableJLinqWrapper.VERSION + ") ===---");
+		System.out.println("---=== Testing MySQL Queries ===---");
 		mySQLQueries();
 		System.out.println("---=== Finished Testing MySQL Queries ===---");
 	}
