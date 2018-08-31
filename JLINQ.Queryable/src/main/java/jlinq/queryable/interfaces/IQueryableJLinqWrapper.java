@@ -1,4 +1,4 @@
-package jlinq.queryable;
+package jlinq.queryable.interfaces;
 
 import java.util.function.Function;
 import java.util.function.Predicate;

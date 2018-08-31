@@ -1,6 +1,8 @@
-package jlinq.queryable;
+package jlinq.queryable.interfaces;
 
 import java.sql.ResultSet;
+
+import jlinq.queryable.AbstractQueryableJLinqWrapper;
 
 /**
  * 

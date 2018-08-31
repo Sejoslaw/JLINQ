@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
 
+import jlinq.queryable.interfaces.IExecuteQuery;
+import jlinq.queryable.interfaces.IQueryableJLinqWrapper;
+
 /**
  * 
  * Iterator made specially for the result from {@link IQueryableJLinqWrapper}.

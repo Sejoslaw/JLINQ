@@ -3,8 +3,8 @@ import java.sql.DriverManager;
 
 import org.junit.Test;
 
-import jlinq.queryable.IQueryableJLinqWrapper;
 import jlinq.queryable.JLinqQueryable;
+import jlinq.queryable.interfaces.IQueryableJLinqWrapper;
 import jlinq.queryable.mysql.MySqlQueryableJLinqWrapper;
 
 /**

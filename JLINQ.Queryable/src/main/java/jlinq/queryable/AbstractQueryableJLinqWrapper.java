@@ -10,6 +10,8 @@ import java.util.List;
 import jlinq.JLinq;
 import jlinq.JLinqWrapper;
 import jlinq.interfaces.IJLinqWrapper;
+import jlinq.queryable.interfaces.IExecuteQuery;
+import jlinq.queryable.interfaces.IQueryableJLinqWrapper;
 
 /**
  * 

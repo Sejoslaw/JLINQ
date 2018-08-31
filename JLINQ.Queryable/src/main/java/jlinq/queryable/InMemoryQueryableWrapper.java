@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import jlinq.functions.Function2;
 import jlinq.grouping.IGroup;
 import jlinq.interfaces.IJLinqWrapper;
+import jlinq.queryable.interfaces.IQueryableJLinqWrapper;
 
 /**
  * 
