@@ -8,9 +8,9 @@ Projects:
 ---
 | Name | Description |
 | -----|-------------|
-| [JLINQ](https://github.com/Sejoslaw/JLINQ/tree/master/JLINQ/src/jlinq) | Contains core interfaces and default implementation for JLINQ queries. [Examples.](https://github.com/Sejoslaw/JLINQ/blob/master/TESTS/src/Main.java) |
-| [W.I.P.] [JLINQ.Queryable](https://github.com/Sejoslaw/JLINQ/tree/master/JLINQ.Queryable/src/jlinq/queryable) | Contains core interfaces for executing JLINQ queries on data sources. |
-| [W.I.P.] [JLINQ.Queryable.MySQL](https://github.com/Sejoslaw/JLINQ/tree/master/JLINQ.Queryable.MySQL/src/jlinq/queryable/mysql) | Contains query wrapper for MySQL database ([MySqlQueryableJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ.Queryable.MySQL/src/jlinq/queryable/mysql/MySqlQueryableJLinqWrapper.java)). |
+| [JLINQ](https://github.com/Sejoslaw/JLINQ/tree/master/JLINQ/src/main/java/jlinq) | Contains core interfaces and default implementation for JLINQ queries. [Examples.](https://github.com/Sejoslaw/JLINQ/blob/master/TESTS/src/Main.java) |
+| [W.I.P.] [JLINQ.Queryable](https://github.com/Sejoslaw/JLINQ/tree/master/JLINQ.Queryable/src/main/java/jlinq/queryable) | Contains core interfaces for executing JLINQ queries on data sources. |
+| [W.I.P.] [JLINQ.Queryable.MySQL](https://github.com/Sejoslaw/JLINQ/tree/master/JLINQ.Queryable.MySQL/src/main/java/jlinq/queryable/mysql) | Contains query wrapper for MySQL database ([MySqlQueryableJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ.Queryable.MySQL/src/main/java/jlinq/queryable/mysql/MySqlQueryableJLinqWrapper.java)). |
 
 To be implemented LINQ methods:
 ---
@@ -76,9 +76,9 @@ To be implemented LINQ methods:
 TODO / FINISHED:
 ---
 - [X] Documentation !!!
-- [X] Add support for basic math operations for whole collection. (See: [INumberedJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ/src/jlinq/interfaces/INumberJLinqWrapper.java))
+- [X] Add support for basic math operations for whole collection. (See: [INumberedJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ/src/main/java/jlinq/interfaces/INumberJLinqWrapper.java))
 - [ ] Add handler for IQueryable.
-- [X] Add support for parallel operations. (See: [IParallelJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ/src/jlinq/interfaces/IParallelJLinqWrapper.java))
+- [X] Add support for parallel operations. (See: [IParallelJLinqWrapper](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ/src/main/java/jlinq/interfaces/IParallelJLinqWrapper.java))
 
 
 Examples:
@@ -109,5 +109,3 @@ int count = JLinq.count(customersWithAge24);
 // Where as constructor parameter you must specify the Iterable on which you want to use JLinq.
 int wrapperCount = new JLinqWrapper<Customer>(customers).where((customer) -> customer.age == 24).count();
 ```
-
-See test projects for more info: [Basic Operations](https://github.com/Sejoslaw/JLINQ/blob/master/JLINQ_BasicTests/src/Main.java)
